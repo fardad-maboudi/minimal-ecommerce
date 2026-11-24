@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-canvas: #faf8f5;
+    --bg-linen: #f2ede6;
+    --bg-card: #f5f1ea;
+    --bg-espresso: #1a1816;
+    --bg-espresso-soft: #25211e;
+    --ink: #1b1917;
+    --ink-muted: #665f57;
+    --ink-light: #f5f1eb;
+    --border-hairline: #e5ded4;
+    --accent: #a64b2a;
+    --accent-hover: #8a3b1f;
+  }
+
+  html {
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-canvas);
+    color: var(--ink);
+  }
+
+  button,
+  a {
+    cursor: pointer;
+  }
+}
+
+.font-serif-display {
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.font-sans-ui {
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.font-mono-tech {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drawerIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+  100% {
+    transform: scale(2.15);
+    opacity: 0;
+  }
+}
+
+.animate-fade-slide {
+  animation: fadeInSlide 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-drawer-in {
+  animation: drawerIn 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hotspot-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(250, 248, 245, 0.85);
+  animation: pulseRing 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+/* Crisp custom scrollbars for drawers */
+.subtle-scroll::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.subtle-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.subtle-scroll::-webkit-scrollbar-thumb {
+  background: rgba(102, 95, 87, 0.28);
+  border-radius: 9999px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

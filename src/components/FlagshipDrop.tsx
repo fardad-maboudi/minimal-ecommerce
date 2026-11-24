@@ -1,0 +1,156 @@
+import React, { useEffect, useState } from "react";
+import { ArrowRight } from "lucide-react";
+import { formatMoney, getEffectivePrice, useStore } from "../context/StoreContext";
+
+function useCountdown(initialSeconds: number) {
+  const [remaining, setRemaining] = useState(initialSeconds);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setRemaining((s) => (s > 0 ? s - 1 : initialSeconds));
+    }, 1000);
+    return () => window.clearInterval(id);
+  }, [initialSeconds]);
+
+  const days = Math.floor(remaining / 86400);
+  const hours = Math.floor((remaining % 86400) / 3600);
+  const minutes = Math.floor((remaining % 3600) / 60);
+  const seconds = remaining % 60;
+  return { days, hours, minutes, seconds };
+}
+
+export const FlagshipDrop: React.FC = () => {
+  const { products, addToCart, setActiveProduct } = useStore();
+  const time = useCountdown(2 * 86400 + 14 * 3600 + 38 * 60 + 19);
+
+  const flagship =
+    products.find((p) => p.id === "solen-kanso-kettle") || products[0];
+  if (!flagship) return null;
+
+  const price = getEffectivePrice(flagship);
+  const pad = (n: number) => String(n).padStart(2, "0");
+
+  return (
+    <section className="w-full bg-[#1A1816] text-[#F5F1EB]">
+      <div className="mx-auto grid max-w-[1380px] grid-cols-1 items-stretch lg:grid-cols-12">
+        {/* Dramatic full-bleed dark photograph */}
+        <div className="relative min-h-[400px] overflow-hidden lg:col-span-6 lg:min-h-[640px]">
+          <img
+            src="/images/spotlight-drop.jpg"
+            alt="Limited edition Kanso obsidian ceramic and bronze pour-over brewer bathed in late afternoon light"
+            loading="lazy"
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute bottom-5 left-5 bg-[#1A1816]/80 px-3.5 py-2 text-[11px] uppercase tracking-[0.18em] text-[#E6DDD1] backdrop-blur-xs">
+            Batch 04 · Only {flagship.stock} numbered units remaining
+          </div>
+        </div>
+
+        {/* High-converting story + offer right half */}
+        <div className="flex flex-col justify-center px-6 py-16 sm:px-12 lg:col-span-6 lg:px-16 lg:py-20">
+          <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-[#D79272]">
+            Flagship Release · Save {formatMoney(flagship.price - price || 30)}
+          </p>
+
+          <h2 className="font-serif-display mt-3 text-[40px] font-normal leading-[1.06] text-[#FAF8F5] sm:text-[52px]">
+            The Kanso <em className="italic">Pour-Over</em> Ritual
+          </h2>
+
+          <p className="mt-5 max-w-[460px] text-[15px] leading-[1.72] text-[#C8BFB5]">
+            Engineered across eighteen months with a third-generation metalwork
+            workshop in Kyoto. Counterbalanced smoked walnut meets a slow 0.9mm
+            vertical ribbon flow — paired with our hand-fluted borosilicate
+            server for effortless everyday extraction.
+          </p>
+
+          {/* Compact architectural specs strip */}
+          <dl className="mt-8 grid grid-cols-3 gap-4 border-y border-[#F5F1EB]/14 py-5">
+            <div>
+              <dt className="text-[10.5px] uppercase tracking-[0.16em] text-[#9E958B]">
+                Spout Flow
+              </dt>
+              <dd className="font-serif-display mt-1 text-[24px] text-[#FAF8F5]">
+                0.9 mm
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[10.5px] uppercase tracking-[0.16em] text-[#9E958B]">
+                Capacity
+              </dt>
+              <dd className="font-serif-display mt-1 text-[24px] text-[#FAF8F5]">
+                900 ml
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[10.5px] uppercase tracking-[0.16em] text-[#9E958B]">
+                Care Plan
+              </dt>
+              <dd className="font-serif-display mt-1 text-[24px] text-[#FAF8F5]">
+                5 Years
+              </dd>
+            </div>
+          </dl>
+
+          {/* Quiet live reservation window countdown */}
+          <div className="mt-7 flex items-center gap-6">
+            <span className="text-[10.5px] uppercase tracking-[0.18em] text-[#9E958B]">
+              Autumn pricing ends
+            </span>
+            <div className="flex items-center gap-3 tabular-nums text-[15px] font-medium text-[#FAF8F5]">
+              <span>
+                {pad(time.days)}
+                <span className="ml-0.5 text-[11px] font-normal text-[#9E958B]">d</span>
+              </span>
+              <span className="text-[#595149]">:</span>
+              <span>
+                {pad(time.hours)}
+                <span className="ml-0.5 text-[11px] font-normal text-[#9E958B]">h</span>
+              </span>
+              <span className="text-[#595149]">:</span>
+              <span>
+                {pad(time.minutes)}
+                <span className="ml-0.5 text-[11px] font-normal text-[#9E958B]">m</span>
+              </span>
+              <span className="text-[#595149]">:</span>
+              <span>
+                {pad(time.seconds)}
+                <span className="ml-0.5 text-[11px] font-normal text-[#9E958B]">s</span>
+              </span>
+            </div>
+          </div>
+
+          {/* Primary conversion CTA */}
+          <div className="mt-9 flex flex-wrap items-center gap-5">
+            <button
+              type="button"
+              onClick={() =>
+                addToCart(flagship, {
+                  quantity: 1,
+                  color: flagship.colors[0]?.name,
+                  openDrawer: true,
+                })
+              }
+              className="group inline-flex items-center gap-3 bg-[#FAF8F5] px-7 py-4 text-[12px] font-medium uppercase tracking-[0.16em] text-[#1B1917] transition hover:bg-[#EDE5DB]"
+            >
+              Add Edition — {formatMoney(price)}
+              {flagship.discountedPrice != null && (
+                <span className="text-[#877D72] line-through">
+                  {formatMoney(flagship.price)}
+                </span>
+              )}
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveProduct(flagship)}
+              className="border-b border-[#F5F1EB]/45 pb-1 text-[12px] uppercase tracking-[0.15em] text-[#E6DDD1] transition hover:border-[#FAF8F5] hover:text-[#FAF8F5]"
+            >
+              Full specs
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
