@@ -33,7 +33,7 @@ export const JournalAndFaq: React.FC = () => {
     setSubmitting(false);
     setSubscribed(true);
     setEmail("");
-    showToast("Welcome to Solèn — apply WELCOME15 in your bag for 15% off.");
+    showToast("به سولن خوش آمدید؛ کد WELCOME15 را برای ۱۵٪ تخفیف در سبد خرید وارد کنید.");
   };
 
   const handlePushToggle = async () => {
@@ -47,18 +47,18 @@ export const JournalAndFaq: React.FC = () => {
   };
 
   const pushButtonLabel = (() => {
-    if (pushBusy) return "Updating…";
+    if (pushBusy) return "در حال به‌روزرسانی…";
     switch (pushState) {
       case "subscribed":
-        return "Drop alerts on";
+        return "اعلان مجموعه‌ها فعال است";
       case "denied":
-        return "Notifications blocked";
+        return "اعلان‌ها مسدود شده‌اند";
       case "unsupported":
-        return "Alerts unavailable";
+        return "اعلان در دسترس نیست";
       case "needs-install":
-        return "Install app for alerts";
+        return "برای اعلان‌ها برنامه را نصب کنید";
       default:
-        return "Notify me on new drops";
+        return "اعلان مجموعه‌های جدید";
     }
   })();
 
@@ -73,14 +73,14 @@ export const JournalAndFaq: React.FC = () => {
           <div className="flex flex-col justify-between gap-4 pb-10 sm:flex-row sm:items-end">
             <div>
               <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#A64B2A]">
-                The Studio Journal
+                مجله استودیو
               </p>
               <h2 className="font-serif-display mt-2 text-[36px] font-normal leading-[1.08] text-[#1B1917] sm:text-[46px]">
-                Field notes & slow rituals
+                یادداشت‌هایی از کارگاه و آیین‌های آرام
               </h2>
             </div>
             <p className="text-[13px] text-[#665F57]">
-              Dispatches from Caldas, Kyoto & Grasse
+              روایت‌هایی از کالداس، کیوتو و گراس
             </p>
           </div>
 
@@ -111,7 +111,7 @@ export const JournalAndFaq: React.FC = () => {
                   {article.excerpt}
                 </p>
                 <span className="mt-3.5 inline-flex items-center gap-1.5 border-b border-transparent pb-0.5 text-[11.5px] font-medium uppercase tracking-[0.14em] text-[#1B1917] transition group-hover:border-[#1B1917]">
-                  Read story <ArrowRight className="h-3 w-3" />
+                  مطالعه مطلب <ArrowRight className="h-3 w-3" />
                 </span>
               </article>
             ))}
@@ -124,17 +124,16 @@ export const JournalAndFaq: React.FC = () => {
         <div className="mx-auto grid max-w-[1380px] grid-cols-1 gap-12 px-5 sm:px-8 lg:grid-cols-12 lg:px-12">
           <div className="lg:col-span-4">
             <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#A64B2A]">
-              Client Care
+              خدمات مشتریان
             </p>
             <h2 className="font-serif-display mt-2 text-[36px] font-normal leading-[1.08] text-[#1B1917] sm:text-[44px]">
-              Frequently asked
+              پرسش‌های پرتکرار
             </h2>
             <p className="mt-3 text-[14px] leading-relaxed text-[#665F57]">
-              Shipping across 38 countries with protective zero-plastic stone
-              cradles and direct care from our Lisbon atelier.
+              ارسال به ۳۸ کشور با بسته‌بندی محافظِ بدون پلاستیک و پشتیبانی مستقیم کارگاه ما در لیسبون.
             </p>
             <p className="mt-5 text-[12.5px] text-[#7A7168]">
-              Concierge ·{" "}
+              راهنمای خرید ·{" "}
               <a
                 href="mailto:atelier@solenliving.com"
                 className="text-[#1B1917] underline underline-offset-4 hover:text-[#A64B2A]"
@@ -153,7 +152,7 @@ export const JournalAndFaq: React.FC = () => {
                     type="button"
                     onClick={() => setOpenFaq(isOpen ? "" : item.id)}
                     aria-expanded={isOpen}
-                    className="flex w-full items-center justify-between gap-6 py-5 text-left"
+                    className="flex w-full items-center justify-between gap-6 py-5 text-right"
                   >
                     <span className="text-[15.5px] font-medium leading-snug text-[#1B1917]">
                       {item.question}
@@ -180,25 +179,24 @@ export const JournalAndFaq: React.FC = () => {
       <section className="border-t border-[#E5DED4] bg-[#EFE9E0] py-20 sm:py-24">
         <div className="mx-auto max-w-[720px] px-5 text-center sm:px-8">
           <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-[#A64B2A]">
-            Private Ledger · 15% Off
+            باشگاه مشتریان · ۱۵٪ تخفیف
           </p>
           <h2 className="font-serif-display mt-3 text-[38px] font-normal leading-[1.08] text-[#1B1917] sm:text-[52px]">
-            First access to small-batch drops
+            اولین نفر باشید از مجموعه‌های تازه
           </h2>
           <p className="mx-auto mt-4 max-w-[500px] text-[14.5px] leading-relaxed text-[#665F57]">
-            Join 19,000 readers receiving early kiln release keys, seasonal
-            essays, and an instant 15% voucher for your very first order.
+            به جمع ۱۹ هزار همراه ما بپیوندید؛ خبر انتشار مجموعه‌ها، یادداشت‌های فصلی و کد ۱۵٪ تخفیف سفارش نخست را زودتر دریافت کنید.
           </p>
 
           {subscribed ? (
             <div className="mx-auto mt-8 inline-flex items-center gap-2.5 border border-[#1B1917]/20 bg-[#FAF8F5] px-6 py-4 text-[13.5px] text-[#1B1917]">
               <Check className="h-4 w-4 text-[#A64B2A]" />
               <span>
-                You’re on the ledger. Enter{" "}
+                ثبت‌نام شما انجام شد. هنگام پرداخت کد{" "}
                 <strong className="font-mono-tech tracking-wide">
                   WELCOME15
                 </strong>{" "}
-                at checkout for 15% off.
+                را برای ۱۵٪ تخفیف وارد کنید.
               </span>
             </div>
           ) : (
@@ -207,7 +205,7 @@ export const JournalAndFaq: React.FC = () => {
               className="mx-auto mt-8 flex max-w-[480px] flex-col gap-3 sm:flex-row sm:gap-0"
             >
               <label htmlFor="vip-email" className="sr-only">
-                Email address
+                نشانی ایمیل
               </label>
               <input
                 id="vip-email"
@@ -215,7 +213,7 @@ export const JournalAndFaq: React.FC = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email address"
+                placeholder="نشانی ایمیل خود را وارد کنید"
                 className="h-12 flex-1 border border-[#C9BFB2] bg-[#FAF8F5] px-4 text-[13.5px] text-[#1B1917] placeholder:text-[#8E857B] focus:border-[#1B1917] focus:outline-none sm:border-r-0"
               />
               <button
@@ -223,14 +221,14 @@ export const JournalAndFaq: React.FC = () => {
                 disabled={submitting}
                 className="h-12 shrink-0 bg-[#1B1917] px-7 text-[11.5px] font-medium uppercase tracking-[0.16em] text-[#FAF8F5] transition hover:bg-[#332E2A] disabled:opacity-60"
               >
-                {submitting ? "Joining…" : "Claim 15% Off"}
+                {submitting ? "در حال ثبت‌نام…" : "دریافت ۱۵٪ تخفیف"}
               </button>
             </form>
           )}
 
           {/* Direct Web Push drop & order alerts connected to client.site.push */}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-[12px] text-[#665F57]">
-            <span>Prefer quiet browser alerts for order status & drops?</span>
+            <span>مایلید اعلان‌های سفارش و مجموعه‌های تازه را دریافت کنید؟</span>
             <button
               type="button"
               onClick={handlePushToggle}

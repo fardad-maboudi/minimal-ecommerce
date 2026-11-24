@@ -20,19 +20,17 @@ export const Footer: React.FC = () => {
               SOLÈN
             </p>
             <p className="mt-4 max-w-[310px] text-[13.5px] leading-[1.7] text-[#9E948A]">
-              Architectural home objects shaped alongside independent
-              family workshops across Kyoto, Caldas da Rainha, Milan, Grasse,
-              and Kortrijk.
+              اشیای کاربردی و ماندگار برای خانه، ساخته‌شده با کارگاه‌های خانوادگی مستقل در کیوتو، کالداس، میلان، گراس و کورتریک.
             </p>
             <p className="mt-6 text-[12px] text-[#7D746B]">
-              Rua da Escola Politécnica 68, Lisbon
+              لیسبون، خیابان اسکولا پلی‌تکنیکا، پلاک ۶۸
             </p>
           </div>
 
-          {/* Column 1: Shop */}
+          {/* Column 1: فروشگاه */}
           <div className="lg:col-span-2">
             <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#FAF8F5]">
-              Shop
+              فروشگاه
             </p>
             <ul className="mt-5 space-y-3 text-[13px]">
               <li>
@@ -41,7 +39,7 @@ export const Footer: React.FC = () => {
                   onClick={() => jumpToCategory("all")}
                   className="transition hover:text-[#FAF8F5]"
                 >
-                  All Objects
+                  همه محصولات
                 </button>
               </li>
               <li>
@@ -50,7 +48,7 @@ export const Footer: React.FC = () => {
                   onClick={() => jumpToCategory("coffee")}
                   className="transition hover:text-[#FAF8F5]"
                 >
-                  Morning Coffee
+                  قهوه صبحگاهی
                 </button>
               </li>
               <li>
@@ -59,7 +57,7 @@ export const Footer: React.FC = () => {
                   onClick={() => jumpToCategory("lighting")}
                   className="transition hover:text-[#FAF8F5]"
                 >
-                  Living & Light
+                  زندگی و نور
                 </button>
               </li>
               <li>
@@ -68,7 +66,7 @@ export const Footer: React.FC = () => {
                   onClick={() => jumpToCategory("botanical")}
                   className="transition hover:text-[#FAF8F5]"
                 >
-                  Botanical Scent
+                  رایحه گیاهی
                 </button>
               </li>
               <li>
@@ -77,7 +75,7 @@ export const Footer: React.FC = () => {
                   onClick={() => jumpToCategory("textiles")}
                   className="transition hover:text-[#FAF8F5]"
                 >
-                  Tactile Linen
+                  کتان بافت‌دار
                 </button>
               </li>
             </ul>
@@ -86,7 +84,7 @@ export const Footer: React.FC = () => {
           {/* Column 2: Explore */}
           <div className="lg:col-span-3">
             <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#FAF8F5]">
-              Client Care
+              خدمات مشتریان
             </p>
             <ul className="mt-5 space-y-3 text-[13px]">
               <li>
@@ -95,7 +93,7 @@ export const Footer: React.FC = () => {
                   onClick={() => openAccount("orders")}
                   className="transition hover:text-[#FAF8F5]"
                 >
-                  Track an Order
+                  پیگیری سفارش
                 </button>
               </li>
               <li>
@@ -104,7 +102,7 @@ export const Footer: React.FC = () => {
                   onClick={() => openAccount("signin")}
                   className="transition hover:text-[#FAF8F5]"
                 >
-                  Member Sign In
+                  ورود اعضا
                 </button>
               </li>
               <li>
@@ -113,17 +111,17 @@ export const Footer: React.FC = () => {
                   onClick={() => openAccount("wishlist")}
                   className="transition hover:text-[#FAF8F5]"
                 >
-                  Saved Pieces
+                  علاقه‌مندی‌ها
                 </button>
               </li>
               <li>
                 <a href="#bundles" className="transition hover:text-[#FAF8F5]">
-                  Ritual Gift Sets
+                  ست‌های هدیه
                 </a>
               </li>
               <li>
                 <a href="#journal" className="transition hover:text-[#FAF8F5]">
-                  The Studio Journal
+                  مجله استودیو
                 </a>
               </li>
             </ul>
@@ -132,15 +130,14 @@ export const Footer: React.FC = () => {
           {/* Column 3: Backend Studio Link */}
           <div className="lg:col-span-3">
             <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#FAF8F5]">
-              Commerce Platform
+              زیرساخت فروشگاه
             </p>
             <p className="mt-5 text-[13px] leading-relaxed text-[#9E948A]">
-              Wired natively to{" "}
+              متصل مستقیم به{" "}
               <code className="font-mono-tech text-[11.5px] text-[#DED5CA]">
                 @joorchin/client-sdk
               </code>{" "}
-              for catalog, auth, checkout, push alerts, and back-office
-              fulfillment.
+              برای مدیریت محصولات، ورود، پرداخت، اعلان‌ها و پردازش سفارش‌ها.
             </p>
             <button
               type="button"
@@ -155,17 +152,17 @@ export const Footer: React.FC = () => {
                 }`}
               />
               {connectionMode === "connected"
-                ? `Connected · ${joorchinConfig.appId}`
-                : "Connect Joorchin App"}
+                ? `متصل · ${joorchinConfig.appId}`
+                : "اتصال به فروشگاه"}
             </button>
           </div>
         </div>
 
         {/* Bottom hairline bar */}
         <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-[#F5F1EB]/12 pt-8 text-[12px] text-[#7F766D] sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} SOLÈN Atelier. All rights reserved.</p>
+          <p>© {new Date().getFullYear()}، آتلیه سولن. تمامی حقوق محفوظ است.</p>
           <p className="tracking-[0.06em]">
-            Visa · Mastercard · Apple Pay · Direct Transfer · Encrypted via Joorchin
+            ویزا · مسترکارت · اپل‌پی · انتقال مستقیم · پرداخت امن
           </p>
         </div>
       </div>

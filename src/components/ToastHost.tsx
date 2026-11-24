@@ -32,7 +32,7 @@ export const ToastHost: React.FC = () => {
             )}
             <button
               type="button"
-              aria-label="Dismiss notification"
+              aria-label="بستن اعلان"
               onClick={() => dismissToast(t.id)}
               className="text-[#8E847A] hover:text-[#FAF8F5]"
             >

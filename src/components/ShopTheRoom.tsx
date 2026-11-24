@@ -7,6 +7,7 @@ import {
   useStore,
 } from "../context/StoreContext";
 import type { StoreProduct } from "../types/store";
+import { toPersianDigits } from "../utils/localization";
 
 export const ShopTheRoom: React.FC = () => {
   const { products, addToCart, addBundleToCart, setActiveProduct } = useStore();
@@ -32,22 +33,22 @@ export const ShopTheRoom: React.FC = () => {
       <div className="flex flex-col justify-between gap-4 pb-10 sm:flex-row sm:items-end">
         <div>
           <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#A64B2A]">
-            Shop the Room · Tap any point
+            چیدمان اتاق · برای مشاهده انتخاب کنید
           </p>
           <h2 className="font-serif-display mt-2 text-[36px] font-normal leading-[1.08] text-[#1B1917] sm:text-[48px]">
-            The Lisbon living room
+            پذیرایی لیسبونی
           </h2>
         </div>
         {roomProducts.length >= 2 && (
           <button
             type="button"
             onClick={() =>
-              addBundleToCart(roomProducts, 18, "Complete Room Edit")
+              addBundleToCart(roomProducts, 18, "چیدمان کامل اتاق")
             }
             className="inline-flex items-center gap-2 self-start border border-[#1B1917] px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.15em] text-[#1B1917] transition hover:bg-[#1B1917] hover:text-[#FAF8F5] sm:self-end"
           >
             <ShoppingBag className="h-3.5 w-3.5" />
-            Shop all {roomProducts.length} · {formatMoney(roomDiscounted)} (Save 18%)
+            خرید همه {toPersianDigits(roomProducts.length)} · {formatMoney(roomDiscounted)} (۱۸٪ تخفیف)
           </button>
         )}
       </div>
@@ -57,7 +58,7 @@ export const ShopTheRoom: React.FC = () => {
         <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#E9E2D8] lg:col-span-8">
           <img
             src="/images/lookbook-room.jpg"
-            alt="Minimalist European apartment styled with Lume table lamp, wild fig diffuser, speckled ceramic bowls, and draped Belgian linen throw"
+            alt="آپارتمان اروپایی مینیمال با چراغ لوم، دیفیوزر انجیر وحشی، کاسه‌های سرامیکی خال‌دار و پتوی کتان بلژیکی"
             loading="lazy"
             className="h-full w-full object-cover"
           />
@@ -69,9 +70,9 @@ export const ShopTheRoom: React.FC = () => {
               <button
                 key={spot.id}
                 type="button"
-                aria-label={`Inspect ${prod?.title ?? `object ${spot.number}`}`}
+                aria-label={`مشاهده ${prod?.title ?? `محصول ${spot.number}`}`}
                 onClick={() => setActiveId(spot.id)}
-                style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
+                style={{ right: `${100 - spot.x}%`, top: `${spot.y}%` }}
                 className={`absolute -translate-x-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full text-[11.5px] font-medium transition duration-200 ${
                   selected
                     ? "bg-[#A64B2A] text-[#FAF8F5] scale-110 shadow-lg ring-4 ring-[#FAF8F5]/50"
@@ -91,7 +92,7 @@ export const ShopTheRoom: React.FC = () => {
               {/* Quick numbered pin index */}
               <div className="flex items-center justify-between border-b border-[#EAE3D9] pb-4">
                 <span className="text-[11px] uppercase tracking-[0.18em] text-[#7A7168]">
-                  Piece 0{activeSpot.number} of 0{LOOKBOOK_HOTSPOTS.length}
+                  محصول ۰{toPersianDigits(activeSpot.number)} از ۰{toPersianDigits(LOOKBOOK_HOTSPOTS.length)}
                 </span>
                 <div className="flex gap-1.5">
                   {LOOKBOOK_HOTSPOTS.map((s) => (
@@ -130,7 +131,7 @@ export const ShopTheRoom: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setActiveProduct(activeProduct)}
-                    className="text-left hover:text-[#A64B2A]"
+                    className="text-right hover:text-[#A64B2A]"
                   >
                     {activeProduct.title}
                   </button>
@@ -164,14 +165,14 @@ export const ShopTheRoom: React.FC = () => {
                 className="flex flex-1 items-center justify-center gap-2 bg-[#1B1917] py-3.5 text-[11.5px] font-medium uppercase tracking-[0.15em] text-[#FAF8F5] transition hover:bg-[#342F2A]"
               >
                 <Plus className="h-3.5 w-3.5" />
-                Add to Bag
+                افزودن به سبد
               </button>
               <button
                 type="button"
                 onClick={() => setActiveProduct(activeProduct)}
                 className="border border-[#D8CFC3] px-4 py-3.5 text-[11.5px] uppercase tracking-[0.14em] text-[#453F3A] transition hover:border-[#1B1917] hover:text-[#1B1917]"
               >
-                Inspect
+                مشاهده جزئیات
               </button>
             </div>
           </div>

@@ -9,6 +9,7 @@ import {
   Check,
 } from "lucide-react";
 import { useStore } from "../context/StoreContext";
+import { toPersianDigits } from "../utils/localization";
 
 export const Header: React.FC = () => {
   const {
@@ -36,16 +37,16 @@ export const Header: React.FC = () => {
   const copyWelcomeCode = () => {
     navigator.clipboard?.writeText("WELCOME15").catch(() => undefined);
     setCopied(true);
-    showToast("Code WELCOME15 copied — apply in your bag for 15% off");
+    showToast("کد WELCOME15 کپی شد؛ برای دریافت ۱۵٪ تخفیف در سبد خرید وارد کنید");
     window.setTimeout(() => setCopied(false), 2200);
   };
 
   const navLinks = [
-    { label: "Shop", href: "#catalog" },
-    { label: "Collections", href: "#collections" },
-    { label: "Ritual Sets", href: "#bundles" },
-    { label: "Lookbook", href: "#lookbook" },
-    { label: "Journal", href: "#journal" },
+    { label: "فروشگاه", href: "#catalog" },
+    { label: "مجموعه‌ها", href: "#collections" },
+    { label: "ست‌های آیینی", href: "#bundles" },
+    { label: "راهنمای چیدمان", href: "#lookbook" },
+    { label: "مجله", href: "#journal" },
   ];
 
   const dotColor =
@@ -63,14 +64,14 @@ export const Header: React.FC = () => {
       <div className="bg-[#1A1816] text-[#EFEAE2] text-[11px] tracking-[0.14em] uppercase">
         <div className="mx-auto flex h-9 max-w-[1380px] items-center justify-center px-4 text-center">
           <span className="truncate">
-            Complimentary shipping over $150
+            ارسال رایگان برای سفارش‌های بالای ۱۵۰ دلار
             <span className="mx-2.5 text-[#7B7268]">·</span>
-            15% off first order with{" "}
+            ۱۵٪ تخفیف سفارش اول با کد{" "}
             <button
               type="button"
               onClick={copyWelcomeCode}
               className="inline-flex items-center gap-1 border-b border-[#EFEAE2]/50 pb-px font-medium text-[#FAF8F5] transition hover:border-[#FAF8F5]"
-              title="Copy promo code"
+              title="کپی کد تخفیف"
             >
               WELCOME15
               {copied && <Check className="h-3 w-3 text-emerald-300" />}
@@ -93,13 +94,13 @@ export const Header: React.FC = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
-              aria-label="Open menu"
+              aria-label="باز کردن منو"
               className="inline-flex items-center justify-center p-1 text-[#1B1917] lg:hidden"
             >
               <Menu className="h-5 w-5 stroke-[1.5]" />
             </button>
 
-            <nav className="hidden items-center gap-7 lg:flex" aria-label="Main">
+            <nav className="hidden items-center gap-7 lg:flex" aria-label="منوی اصلی">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
@@ -125,9 +126,9 @@ export const Header: React.FC = () => {
             <button
               type="button"
               onClick={() => setSearchOpen(true)}
-              aria-label="Search store"
+              aria-label="جست‌وجو در فروشگاه"
               className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[#1B1917] transition hover:bg-[#EFE9E0]"
-              title="Search catalog (⌘K)"
+              title="جست‌وجو در محصولات (⌘K)"
             >
               <Search className="h-[18px] w-[18px] stroke-[1.5]" />
             </button>
@@ -135,9 +136,9 @@ export const Header: React.FC = () => {
             <button
               type="button"
               onClick={() => openAccount(user ? "orders" : "signin")}
-              aria-label="Account and order tracking"
+              aria-label="حساب کاربری و پیگیری سفارش"
               className="relative inline-flex h-9 w-9 items-center justify-center rounded-full text-[#1B1917] transition hover:bg-[#EFE9E0]"
-              title={user ? `${user.fullName} — Account & Orders` : "Sign in & Track Order"}
+              title={user ? `${user.fullName} — حساب و سفارش‌ها` : "ورود و پیگیری سفارش"}
             >
               <User className="h-[18px] w-[18px] stroke-[1.5]" />
               {user && (
@@ -148,26 +149,26 @@ export const Header: React.FC = () => {
             <button
               type="button"
               onClick={() => setJoorchinOpen(true)}
-              aria-label="Configure Joorchin SDK backend"
+              aria-label="تنظیم اتصال فروشگاه"
               className="relative inline-flex h-9 items-center gap-1.5 rounded-full px-2.5 text-[#453F3A] transition hover:bg-[#EFE9E0] hover:text-[#1B1917]"
-              title="Joorchin SDK Backend Connection"
+              title="اتصال به زیرساخت فروشگاه"
             >
               <Database className="h-[15px] w-[15px] stroke-[1.5]" />
               <span className={`h-1.5 w-1.5 rounded-full ${dotColor}`} />
               <span className="hidden text-[11px] font-medium tracking-[0.04em] xl:inline">
-                {connectionMode === "connected" ? "Live" : "Backend"}
+                {connectionMode === "connected" ? "آنلاین" : "زیرساخت"}
               </span>
             </button>
 
             <button
               type="button"
               onClick={() => setCartOpen(true)}
-              aria-label="Shopping bag"
+              aria-label="سبد خرید"
               className="relative ml-0.5 inline-flex h-9 items-center gap-1.5 rounded-full px-2.5 text-[#1B1917] transition hover:bg-[#EFE9E0]"
             >
               <ShoppingBag className="h-[18px] w-[18px] stroke-[1.5]" />
               <span className="tabular-nums text-[12px] font-medium">
-                {cartCount}
+                {toPersianDigits(cartCount)}
               </span>
             </button>
           </div>
@@ -190,7 +191,7 @@ export const Header: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
-                  aria-label="Close navigation"
+                  aria-label="بستن منو"
                   className="p-1 text-[#665F57] hover:text-[#1B1917]"
                 >
                   <X className="h-5 w-5 stroke-[1.5]" />
@@ -213,9 +214,9 @@ export const Header: React.FC = () => {
                     setMobileMenuOpen(false);
                     openAccount("orders");
                   }}
-                  className="pt-2 text-left text-sm font-medium text-[#665F57] hover:text-[#1B1917]"
+                  className="pt-2 text-right text-sm font-medium text-[#665F57] hover:text-[#1B1917]"
                 >
-                  Track an Order
+                  پیگیری سفارش
                 </button>
               </nav>
             </div>
@@ -226,13 +227,13 @@ export const Header: React.FC = () => {
                   setMobileMenuOpen(false);
                   setJoorchinOpen(true);
                 }}
-                className="flex w-full items-center justify-between text-left text-xs uppercase tracking-[0.14em] text-[#665F57] hover:text-[#1B1917]"
+                className="flex w-full items-center justify-between text-right text-xs uppercase tracking-[0.14em] text-[#665F57] hover:text-[#1B1917]"
               >
                 <span className="flex items-center gap-2">
                   <span className={`h-2 w-2 rounded-full ${dotColor}`} />
-                  Joorchin SDK Backend
+                  زیرساخت فروشگاه
                 </span>
-                <span>Configure →</span>
+                <span>تنظیمات ←</span>
               </button>
             </div>
           </div>

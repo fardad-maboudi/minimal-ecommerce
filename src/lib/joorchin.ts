@@ -67,7 +67,7 @@ export function getSdkErrorMessage(err: unknown): string {
   if (err instanceof Error) {
     return err.message;
   }
-  return "Unexpected network response from Joorchin API.";
+  return "پاسخ نامعتبر از سرور فروشگاه دریافت شد.";
 }
 
 function normalizeCategory(raw: unknown): Exclude<ProductCategoryId, "all"> {
@@ -329,7 +329,7 @@ export class JoorchinStoreService {
       return {
         products: CURATED_PRODUCTS,
         isLive: false,
-        message: "Connected to local curated catalog. Add a Joorchin App ID to pull live products.",
+        message: "به فهرست محلی محصولات منتخب متصل شد. برای دریافت محصولات زنده، شناسه Joorchin را وارد کنید.",
       };
     }
 
@@ -358,7 +358,7 @@ export class JoorchinStoreService {
         return {
           products: CURATED_PRODUCTS,
           isLive: true,
-          message: "Connected to Joorchin. Store has 0 active products yet — displaying curated showcase.",
+          message: "به فروشگاه Joorchin متصل شد؛ هنوز محصول فعالی وجود ندارد و مجموعه منتخب نمایش داده می‌شود.",
         };
       }
 
@@ -373,7 +373,7 @@ export class JoorchinStoreService {
       return {
         products: mapped,
         isLive: true,
-        message: `Synced ${mapped.length} live products from app ${this.config.appId}.`,
+        message: `${mapped.length} محصول زنده از اپلیکیشن ${this.config.appId} همگام شد.`,
       };
     } catch (err) {
       const msg = getSdkErrorMessage(err);
@@ -429,7 +429,7 @@ export class JoorchinStoreService {
     subtotal: number
   ): Promise<{ voucher?: StoreVoucher; error?: string; synced: boolean }> {
     const code = codeInput.trim().toUpperCase();
-    if (!code) return { error: "Please enter a promo code.", synced: false };
+    if (!code) return { error: "لطفاً کد تخفیف را وارد کنید.", synced: false };
 
     const start = performance.now();
     if (this.client) {
@@ -647,7 +647,7 @@ export class JoorchinStoreService {
     const record: ProductReviewComment = {
       ...review,
       id: `rev-${Date.now()}`,
-      date: new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" }),
+      date: new Date().toLocaleDateString("fa-IR", { month: "long", year: "numeric" }),
     };
     if (this.client) {
       try {
@@ -758,7 +758,7 @@ export class JoorchinStoreService {
           durationMs: Math.round(performance.now() - start),
           detail: `Subscribed web push (${res.id})`,
         });
-        return { state: "subscribed", detail: "Drop & order push alerts active." };
+        return { state: "subscribed", detail: "اعلان مجموعه‌های جدید و سفارش‌ها فعال است." };
       } catch (err) {
         const msg = getSdkErrorMessage(err);
         this.onLog({
@@ -823,7 +823,7 @@ export class JoorchinStoreService {
       });
       return {
         live: false,
-        message: "Preview mode: enter code 123456 to continue, or connect a Joorchin App ID for real SMS OTP.",
+        message: "حالت پیش‌نمایش: برای ادامه کد ۱۲۳۴۵۶ را وارد کنید یا برای دریافت پیامک واقعی شناسه فروشگاه Joorchin را متصل کنید.",
       };
     }
     await this.client.auth.requestOtp(phone);
@@ -834,7 +834,7 @@ export class JoorchinStoreService {
       durationMs: Math.round(performance.now() - start),
       detail: `Sent live SMS OTP to ${phone}`,
     });
-    return { live: true, message: `Verification code sent to ${phone}.` };
+    return { live: true, message: `کد تأیید برای ${phone} ارسال شد.` };
   }
 
   public async verifyCustomerOtp(
@@ -844,7 +844,7 @@ export class JoorchinStoreService {
     const start = performance.now();
     if (!this.client) {
       if (otpCode.trim().length < 4) {
-        throw new Error("Enter the 6-digit verification code (use 123456 in preview).");
+        throw new Error("کد تأیید ۶ رقمی را وارد کنید (در پیش‌نمایش از ۱۲۳۴۵۶ استفاده کنید).");
       }
       this.onLog({
         method: "auth.loginViaPhoneOtp",
@@ -872,7 +872,7 @@ export class JoorchinStoreService {
   ): Promise<{ live: boolean; result?: AuthLoginResult }> {
     const start = performance.now();
     if (!this.client) {
-      if (password.length < 4) throw new Error("Password must be at least 4 characters.");
+      if (password.length < 4) throw new Error("گذرواژه باید دست‌کم ۴ نویسه داشته باشد.");
       this.onLog({
         method: "auth.loginWithPassword",
         route: "sdk:standby",
@@ -938,7 +938,7 @@ export class JoorchinStoreService {
 
   public async requestStaffOtp(phone: string): Promise<void> {
     if (!this.client) {
-      throw new Error("Configure a live Joorchin App ID first to run staff authentication.");
+      throw new Error("برای ورود کارکنان ابتدا شناسه فروشگاه Joorchin را متصل کنید.");
     }
     const start = performance.now();
     await this.client.auth.requestStaffOtp(phone);
@@ -953,7 +953,7 @@ export class JoorchinStoreService {
 
   public async loginStaffOtp(phone: string, otpCode: string): Promise<AuthLoginResult> {
     if (!this.client) {
-      throw new Error("Configure a live Joorchin App ID first.");
+      throw new Error("ابتدا شناسه فروشگاه Joorchin را متصل کنید.");
     }
     const start = performance.now();
     const res = await this.client.auth.loginStaffViaPhoneOtp(phone, otpCode);
@@ -969,7 +969,7 @@ export class JoorchinStoreService {
 
   public async loginStaffPassword(phone: string, password: string): Promise<AuthLoginResult> {
     if (!this.client) {
-      throw new Error("Configure a live Joorchin App ID first.");
+      throw new Error("ابتدا شناسه فروشگاه Joorchin را متصل کنید.");
     }
     const start = performance.now();
     const res = await this.client.auth.loginStaffWithPassword(phone, password);
@@ -988,7 +988,7 @@ export class JoorchinStoreService {
     stats: Record<string, unknown> | null;
   }> {
     if (!this.client) {
-      throw new Error("Connect a live Joorchin App ID and sign in as shop staff first.");
+      throw new Error("ابتدا فروشگاه Joorchin را متصل و به‌عنوان کارمند وارد شوید.");
     }
     const start = performance.now();
     const [ordersRows, statsRaw] = await Promise.all([
@@ -1014,7 +1014,7 @@ export class JoorchinStoreService {
   }
 
   public async fulfillBackofficeOrder(orderId: string): Promise<void> {
-    if (!this.client) throw new Error("No Joorchin app configured.");
+    if (!this.client) throw new Error("هیچ اپلیکیشن Joorchin تنظیم نشده است.");
     const start = performance.now();
     await this.client.backoffice.ecommerce.fulfillOrder(orderId);
     this.onLog({
@@ -1027,7 +1027,7 @@ export class JoorchinStoreService {
   }
 
   public async saveBackofficeProduct(product: Record<string, unknown>): Promise<void> {
-    if (!this.client) throw new Error("No Joorchin app configured.");
+    if (!this.client) throw new Error("هیچ اپلیکیشن Joorchin تنظیم نشده است.");
     const start = performance.now();
     await this.client.backoffice.ecommerce.saveProduct(product);
     this.onLog({

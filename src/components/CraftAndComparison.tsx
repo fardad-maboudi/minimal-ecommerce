@@ -4,18 +4,18 @@ import { COMPARISON_ROWS } from "../data/catalog";
 const PRINCIPLES = [
   {
     num: "01",
-    title: "Raw honest materials",
-    body: "High-fired iron stoneware, 304 steel, Belgian long-staple flax, vein-cut Roman travertine, and cold-pressed oils. Zero faux coatings engineered to hide fatigue.",
+    title: "مواد اولیه اصیل و بی‌پیرایه",
+    body: "سرامیک آهن‌دار پخته‌شده در دمای بالا، فولاد ۳۰۴، کتان بلژیکی الیاف‌بلند، تراورتن رومی و روغن‌های پرس‌سرد؛ بدون روکش مصنوعی برای پنهان‌کردن فرسودگی.",
   },
   {
     num: "02",
-    title: "Direct atelier pricing",
-    body: "We partner directly with eleven named European and Japanese family workshops — eliminating showrooms and 7× retail markups while paying makers fairly.",
+    title: "قیمت‌گذاری مستقیم از کارگاه",
+    body: "با یازده کارگاه خانوادگی در اروپا و ژاپن مستقیم همکاری می‌کنیم؛ بی‌واسطه و بدون حاشیه سود فروشگاه‌ها، با پرداخت منصفانه به سازندگان.",
   },
   {
     num: "03",
-    title: "Built to repair, not dispose",
-    body: "Every silicone seal, ceramic lip, cloth brew filter, wooden grip, and portable lamp cell remains stocked individually for at least ten years.",
+    title: "ساخته‌شده برای تعمیر، نه دور انداختن",
+    body: "واشر سیلیکونی، لبه سرامیکی، فیلتر پارچه‌ای، دسته چوبی و باتری چراغ را دست‌کم تا ده سال جداگانه برای تعمیر و تعویض نگه می‌داریم.",
   },
 ];
 
@@ -29,7 +29,7 @@ export const CraftAndComparison: React.FC = () => {
             <div className="aspect-[4/5] w-full overflow-hidden bg-[#E5DDD2]">
               <img
                 src="/images/craft-artisan.jpg"
-                alt="Artisan ceramicist finishing raw hand-thrown stoneware on a timber table bathed in soft workshop window sunlight"
+                alt="سفالگری که ظرف سرامیکی دست‌ساز را روی میز چوبی، در نور نرم پنجره کارگاه پرداخت می‌کند"
                 loading="lazy"
                 className="h-full w-full object-cover"
               />
@@ -38,16 +38,14 @@ export const CraftAndComparison: React.FC = () => {
 
           <div className="lg:col-span-6">
             <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#A64B2A]">
-              Atelier Philosophy
+              فلسفه کارگاه
             </p>
             <h2 className="font-serif-display mt-3 text-[38px] font-normal leading-[1.07] text-[#1B1917] sm:text-[50px]">
-              Fewer objects, kept across{" "}
-              <em className="italic">decades</em>.
+              اشیای کمتر، ماندگار برای{" "}
+              <em className="italic">دهه‌ها</em>.
             </h2>
             <p className="mt-5 max-w-[500px] text-[15px] leading-[1.72] text-[#665F57]">
-              We produce only two calm architectural releases a year. Each object
-              passes ninety days of kitchen, reading-table, and sun exposure
-              testing before receiving our kiln mark.
+              هر سال تنها دو مجموعه با طراحی آرام و ماندگار تولید می‌کنیم. هر محصول پیش از دریافت نشان کارگاه، نود روز در آشپزخانه، کنار میز مطالعه و زیر نور خورشید آزموده می‌شود.
             </p>
 
             <div className="mt-10 divide-y divide-[#E2D9CE] border-y border-[#E2D9CE]">
@@ -77,28 +75,28 @@ export const CraftAndComparison: React.FC = () => {
         <div className="mt-24 border-t border-[#E2D9CE] pt-16">
           <div className="max-w-[520px]">
             <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#A64B2A]">
-              The Standard
+              معیار ما
             </p>
             <h3 className="font-serif-display mt-2 text-[32px] font-normal leading-tight text-[#1B1917] sm:text-[40px]">
-              How we compare
+              مقایسه با دیگران
             </h3>
           </div>
 
           <div className="mt-8 overflow-x-auto">
-            <table className="w-full min-w-[640px] border-collapse text-left">
+            <table className="w-full min-w-[640px] border-collapse text-right">
               <thead>
                 <tr className="border-b border-[#D7CEC2]">
                   <th className="w-[24%] pb-4 pr-6 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7A7168]">
-                    Standard
+                    معیار
                   </th>
                   <th className="w-[28%] bg-[#1A1816] px-5 py-4 font-serif-display text-[20px] font-normal tracking-[0.1em] text-[#FAF8F5]">
-                    SOLÈN Direct
+                    سولن، بی‌واسطه
                   </th>
                   <th className="w-[24%] px-5 pb-4 text-[11.5px] font-medium uppercase tracking-[0.14em] text-[#665F57]">
-                    Design Galleries
+                    گالری‌های طراحی
                   </th>
                   <th className="w-[24%] pl-5 pb-4 text-[11.5px] font-medium uppercase tracking-[0.14em] text-[#665F57]">
-                    Mass Retail
+                    تولید انبوه
                   </th>
                 </tr>
               </thead>

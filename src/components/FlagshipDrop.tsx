@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { formatMoney, getEffectivePrice, useStore } from "../context/StoreContext";
+import { toPersianDigits } from "../utils/localization";
 
 function useCountdown(initialSeconds: number) {
   const [remaining, setRemaining] = useState(initialSeconds);
@@ -28,7 +29,7 @@ export const FlagshipDrop: React.FC = () => {
   if (!flagship) return null;
 
   const price = getEffectivePrice(flagship);
-  const pad = (n: number) => String(n).padStart(2, "0");
+  const pad = (n: number) => toPersianDigits(String(n).padStart(2, "0"));
 
   return (
     <section className="w-full bg-[#1A1816] text-[#F5F1EB]">
@@ -37,56 +38,53 @@ export const FlagshipDrop: React.FC = () => {
         <div className="relative min-h-[400px] overflow-hidden lg:col-span-6 lg:min-h-[640px]">
           <img
             src="/images/spotlight-drop.jpg"
-            alt="Limited edition Kanso obsidian ceramic and bronze pour-over brewer bathed in late afternoon light"
+            alt="دم‌آور محدود کانسو با سرامیک آبسیدین و برنز، در نور عصرگاهی"
             loading="lazy"
             className="h-full w-full object-cover"
           />
-          <div className="absolute bottom-5 left-5 bg-[#1A1816]/80 px-3.5 py-2 text-[11px] uppercase tracking-[0.18em] text-[#E6DDD1] backdrop-blur-xs">
-            Batch 04 · Only {flagship.stock} numbered units remaining
+          <div className="absolute bottom-5 right-5 bg-[#1A1816]/80 px-3.5 py-2 text-[11px] uppercase tracking-[0.18em] text-[#E6DDD1] backdrop-blur-xs">
+            سری ۰۴ · تنها {toPersianDigits(flagship.stock)} عدد شماره‌گذاری‌شده باقی مانده
           </div>
         </div>
 
         {/* High-converting story + offer right half */}
         <div className="flex flex-col justify-center px-6 py-16 sm:px-12 lg:col-span-6 lg:px-16 lg:py-20">
           <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-[#D79272]">
-            Flagship Release · Save {formatMoney(flagship.price - price || 30)}
+            انتشار ویژه · تخفیف {formatMoney(flagship.price - price || 30)}
           </p>
 
           <h2 className="font-serif-display mt-3 text-[40px] font-normal leading-[1.06] text-[#FAF8F5] sm:text-[52px]">
-            The Kanso <em className="italic">Pour-Over</em> Ritual
+            آیین <em className="italic">دم‌آوری</em> کانسو
           </h2>
 
           <p className="mt-5 max-w-[460px] text-[15px] leading-[1.72] text-[#C8BFB5]">
-            Engineered across eighteen months with a third-generation metalwork
-            workshop in Kyoto. Counterbalanced smoked walnut meets a slow 0.9mm
-            vertical ribbon flow — paired with our hand-fluted borosilicate
-            server for effortless everyday extraction.
+            این محصول طی هجده ماه و با همکاری کارگاه فلزکاری نسل‌سومی در کیوتو طراحی شد. چوب گردوی دودیِ متعادل‌شده، جریان آرام و باریک ۰٫۹ میلی‌متری آب و قوری بوروسیلیکات شیاردار، تجربه‌ای دلنشین برای هر روز می‌سازند.
           </p>
 
           {/* Compact architectural specs strip */}
           <dl className="mt-8 grid grid-cols-3 gap-4 border-y border-[#F5F1EB]/14 py-5">
             <div>
               <dt className="text-[10.5px] uppercase tracking-[0.16em] text-[#9E958B]">
-                Spout Flow
+                جریان خروجی
               </dt>
               <dd className="font-serif-display mt-1 text-[24px] text-[#FAF8F5]">
-                0.9 mm
+                ۰٫۹ میلی‌متر
               </dd>
             </div>
             <div>
               <dt className="text-[10.5px] uppercase tracking-[0.16em] text-[#9E958B]">
-                Capacity
+                گنجایش
               </dt>
               <dd className="font-serif-display mt-1 text-[24px] text-[#FAF8F5]">
-                900 ml
+                ۹۰۰ میلی‌لیتر
               </dd>
             </div>
             <div>
               <dt className="text-[10.5px] uppercase tracking-[0.16em] text-[#9E958B]">
-                Care Plan
+                پشتیبانی
               </dt>
               <dd className="font-serif-display mt-1 text-[24px] text-[#FAF8F5]">
-                5 Years
+                ۵ سال
               </dd>
             </div>
           </dl>
@@ -94,27 +92,27 @@ export const FlagshipDrop: React.FC = () => {
           {/* Quiet live reservation window countdown */}
           <div className="mt-7 flex items-center gap-6">
             <span className="text-[10.5px] uppercase tracking-[0.18em] text-[#9E958B]">
-              Autumn pricing ends
+              پایان قیمت پاییزی
             </span>
             <div className="flex items-center gap-3 tabular-nums text-[15px] font-medium text-[#FAF8F5]">
               <span>
                 {pad(time.days)}
-                <span className="ml-0.5 text-[11px] font-normal text-[#9E958B]">d</span>
+                <span className="ml-0.5 text-[11px] font-normal text-[#9E958B]">روز</span>
               </span>
               <span className="text-[#595149]">:</span>
               <span>
                 {pad(time.hours)}
-                <span className="ml-0.5 text-[11px] font-normal text-[#9E958B]">h</span>
+                <span className="ml-0.5 text-[11px] font-normal text-[#9E958B]">ساعت</span>
               </span>
               <span className="text-[#595149]">:</span>
               <span>
                 {pad(time.minutes)}
-                <span className="ml-0.5 text-[11px] font-normal text-[#9E958B]">m</span>
+                <span className="ml-0.5 text-[11px] font-normal text-[#9E958B]">دقیقه</span>
               </span>
               <span className="text-[#595149]">:</span>
               <span>
                 {pad(time.seconds)}
-                <span className="ml-0.5 text-[11px] font-normal text-[#9E958B]">s</span>
+                <span className="ml-0.5 text-[11px] font-normal text-[#9E958B]">ثانیه</span>
               </span>
             </div>
           </div>
@@ -132,7 +130,7 @@ export const FlagshipDrop: React.FC = () => {
               }
               className="group inline-flex items-center gap-3 bg-[#FAF8F5] px-7 py-4 text-[12px] font-medium uppercase tracking-[0.16em] text-[#1B1917] transition hover:bg-[#EDE5DB]"
             >
-              Add Edition — {formatMoney(price)}
+              افزودن نسخه ویژه — {formatMoney(price)}
               {flagship.discountedPrice != null && (
                 <span className="text-[#877D72] line-through">
                   {formatMoney(flagship.price)}
@@ -146,7 +144,7 @@ export const FlagshipDrop: React.FC = () => {
               onClick={() => setActiveProduct(flagship)}
               className="border-b border-[#F5F1EB]/45 pb-1 text-[12px] uppercase tracking-[0.15em] text-[#E6DDD1] transition hover:border-[#FAF8F5] hover:text-[#FAF8F5]"
             >
-              Full specs
+              مشخصات کامل
             </button>
           </div>
         </div>

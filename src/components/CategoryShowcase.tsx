@@ -14,10 +14,10 @@ export const CategoryShowcase: React.FC = () => {
       <div className="flex flex-col justify-between gap-4 border-b border-[#E5DED4] pb-7 sm:flex-row sm:items-end">
         <div>
           <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#A64B2A]">
-            Curated Rooms
+            فضاهای منتخب
           </p>
           <h2 className="font-serif-display mt-2 text-[36px] font-normal leading-[1.08] text-[#1B1917] sm:text-[46px]">
-            Shop by ritual
+            خرید بر اساس آیین روزمره
           </h2>
         </div>
         <button
@@ -25,7 +25,7 @@ export const CategoryShowcase: React.FC = () => {
           onClick={() => jumpToCategory("all")}
           className="self-start text-[12px] font-medium uppercase tracking-[0.14em] text-[#453F3A] transition hover:text-[#1B1917] sm:self-end"
         >
-          View full archive →
+          مشاهده همه محصولات ←
         </button>
       </div>
 
@@ -35,7 +35,7 @@ export const CategoryShowcase: React.FC = () => {
             key={category.id}
             type="button"
             onClick={() => jumpToCategory(category.id)}
-            className="group text-left focus:outline-none"
+            className="group text-right focus:outline-none"
           >
             <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#EDE7DE]">
               <img

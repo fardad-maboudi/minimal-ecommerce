@@ -6,7 +6,7 @@ import {
   useStore,
 } from "../context/StoreContext";
 
-const SUGGESTED = ["Kettle", "Stoneware", "Lamp", "Wild Fig", "Linen", "Travertine"];
+const SUGGESTED = ["کتری", "سرامیک", "چراغ", "انجیر وحشی", "کتان", "تراورتن"];
 
 export const SearchModal: React.FC = () => {
   const { searchOpen, setSearchOpen, products, setActiveProduct, addToCart } =
@@ -48,7 +48,7 @@ export const SearchModal: React.FC = () => {
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Search catalog"
+        aria-label="جست‌وجوی محصولات"
         className="animate-fade-slide relative z-10 w-full max-w-[680px] bg-[#FAF8F5] shadow-2xl"
       >
         <div className="flex items-center gap-3 border-b border-[#E5DED4] px-5 py-4">
@@ -58,13 +58,13 @@ export const SearchModal: React.FC = () => {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search pieces, materials, or origins…"
+            placeholder="جست‌وجوی محصول، جنس یا خاستگاه…"
             className="flex-1 bg-transparent text-[15px] text-[#1B1917] placeholder:text-[#968D83] focus:outline-none"
           />
           <button
             type="button"
             onClick={() => setSearchOpen(false)}
-            aria-label="Close search"
+            aria-label="بستن جست‌وجو"
             className="p-1 text-[#665F57] hover:text-[#1B1917]"
           >
             <X className="h-4 w-4" />
@@ -74,7 +74,7 @@ export const SearchModal: React.FC = () => {
         {/* Popular search pills */}
         <div className="flex flex-wrap items-center gap-2 border-b border-[#EFE8DF] px-5 py-3">
           <span className="text-[10.5px] uppercase tracking-[0.16em] text-[#8E847A] mr-1">
-            Popular:
+            جست‌وجوهای پرطرفدار:
           </span>
           {SUGGESTED.map((term) => (
             <button
@@ -92,10 +92,10 @@ export const SearchModal: React.FC = () => {
           {results.length === 0 ? (
             <div className="py-12 text-center">
               <p className="font-serif-display text-[24px] text-[#1B1917]">
-                No matches for “{query}”
+                نتیجه‌ای برای «{query}»
               </p>
               <p className="mt-1 text-[13px] text-[#7A7168]">
-                Try coffee, lamp, ceramic, Belgian linen, or cedar.
+                قهوه، چراغ، سرامیک، کتان بلژیکی یا سدر را امتحان کنید.
               </p>
             </div>
           ) : (
@@ -110,7 +110,7 @@ export const SearchModal: React.FC = () => {
                     setSearchOpen(false);
                     setActiveProduct(item);
                   }}
-                  className="flex min-w-0 flex-1 items-center gap-4 text-left group"
+                  className="flex min-w-0 flex-1 items-center gap-4 text-right group"
                 >
                   <img
                     src={item.images.main}
@@ -138,7 +138,7 @@ export const SearchModal: React.FC = () => {
                     }}
                     className="border border-[#1B1917] px-3 py-1.5 text-[10.5px] font-medium uppercase tracking-[0.14em] text-[#1B1917] transition hover:bg-[#1B1917] hover:text-[#FAF8F5]"
                   >
-                    Add
+                    افزودن
                   </button>
                 </div>
               </div>

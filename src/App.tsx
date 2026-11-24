@@ -20,7 +20,7 @@ import { ToastHost } from "./components/ToastHost";
 export function App() {
   return (
     <StoreProvider>
-      <div className="min-h-screen bg-[#FAF8F5] text-[#1B1917]">
+      <div dir="rtl" className="min-h-screen bg-[#FAF8F5] text-[#1B1917]">
         <Header />
 
         <main>
