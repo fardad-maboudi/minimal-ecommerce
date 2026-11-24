@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Star, PenLine, X } from "lucide-react";
 import { useStore } from "../context/StoreContext";
+import { toPersianDigits } from "../utils/localization";
 
 const QUALITY_TAGS = [
-  "Heavy tactile feel",
-  "Gift-worthy packaging",
-  "Daily essential",
-  "True to photos",
-  "Lasts for years",
+  "حس بافتی دلنشین",
+  "بسته‌بندی شایسته هدیه",
+  "همراه هر روز",
+  "همانند تصاویر",
+  "ماندگار برای سال‌ها",
 ];
 
 export const ReviewsSection: React.FC = () => {
@@ -18,7 +19,7 @@ export const ReviewsSection: React.FC = () => {
   const [location, setLocation] = useState("");
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
-  const [selectedTags, setSelectedTags] = useState<string[]>(["Daily essential"]);
+  const [selectedTags, setSelectedTags] = useState<string[]>(["همراه هر روز"]);
   const [submitting, setSubmitting] = useState(false);
 
   const avgScore = (
@@ -56,17 +57,17 @@ export const ReviewsSection: React.FC = () => {
         <div className="flex flex-col justify-between gap-6 border-b border-[#E5DED4] pb-8 lg:flex-row lg:items-end">
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#A64B2A]">
-              In Real Homes
+              در خانه‌های واقعی
             </p>
             <h2 className="font-serif-display mt-2 text-[36px] font-normal leading-[1.08] text-[#1B1917] sm:text-[46px]">
-              Words from verified tables
+              تجربه مشتریان تأییدشده
             </h2>
           </div>
 
           <div className="flex flex-wrap items-center gap-8">
             <div className="flex items-baseline gap-2.5 tabular-nums">
               <span className="font-serif-display text-[40px] leading-none text-[#1B1917]">
-                {avgScore}
+                {toPersianDigits(avgScore)}
               </span>
               <div>
                 <div className="flex items-center gap-0.5 text-[#A64B2A]">
@@ -75,7 +76,7 @@ export const ReviewsSection: React.FC = () => {
                   ))}
                 </div>
                 <p className="mt-1 text-[11.5px] text-[#665F57]">
-                  98% recommend · {1838 + reviews.length} homes
+                  ۹۸٪ پیشنهاد می‌کنند · {toPersianDigits(1838 + reviews.length)} خانه
                 </p>
               </div>
             </div>
@@ -87,11 +88,11 @@ export const ReviewsSection: React.FC = () => {
             >
               {composerOpen ? (
                 <>
-                  <X className="h-3.5 w-3.5" /> Close
+                  <X className="h-3.5 w-3.5" /> بستن
                 </>
               ) : (
                 <>
-                  <PenLine className="h-3.5 w-3.5" /> Leave a review
+                  <PenLine className="h-3.5 w-3.5" /> ثبت دیدگاه
                 </>
               )}
             </button>
@@ -107,7 +108,7 @@ export const ReviewsSection: React.FC = () => {
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
               <div>
                 <label className="block text-[11px] font-medium uppercase tracking-[0.14em] text-[#665F57]">
-                  Piece Reviewed
+                  محصول موردنظر
                 </label>
                 <select
                   value={productId || products[0]?.id || ""}
@@ -123,12 +124,12 @@ export const ReviewsSection: React.FC = () => {
               </div>
               <div>
                 <label className="block text-[11px] font-medium uppercase tracking-[0.14em] text-[#665F57]">
-                  Your Name *
+                  نام شما *
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="Elena Rostova"
+                  placeholder="النا روستوا"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
                   className="mt-1.5 h-10 w-full border border-[#D7CEC2] bg-[#FAF8F5] px-3 text-[13px] focus:border-[#1B1917] focus:outline-none"
@@ -136,11 +137,11 @@ export const ReviewsSection: React.FC = () => {
               </div>
               <div>
                 <label className="block text-[11px] font-medium uppercase tracking-[0.14em] text-[#665F57]">
-                  City
+                  شهر
                 </label>
                 <input
                   type="text"
-                  placeholder="Stockholm"
+                  placeholder="استکهلم"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   className="mt-1.5 h-10 w-full border border-[#D7CEC2] bg-[#FAF8F5] px-3 text-[13px] focus:border-[#1B1917] focus:outline-none"
@@ -151,13 +152,13 @@ export const ReviewsSection: React.FC = () => {
             <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-1.5">
                 <span className="mr-2 text-[11px] uppercase tracking-[0.14em] text-[#665F57]">
-                  Rating
+                  امتیاز
                 </span>
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
                     key={star}
                     type="button"
-                    aria-label={`Rate ${star} out of 5`}
+                    aria-label={`امتیاز ${star} از ۵`}
                     onClick={() => setRating(star)}
                     className={
                       star <= rating ? "text-[#A64B2A]" : "text-[#CFC6BA]"
@@ -194,7 +195,7 @@ export const ReviewsSection: React.FC = () => {
                 rows={3}
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                placeholder="Share how this object fits into your daily routine..."
+                placeholder="از تجربه استفاده روزمره‌تان از این محصول بگویید..."
                 className="w-full border border-[#D7CEC2] bg-[#FAF8F5] p-3 text-[13.5px] focus:border-[#1B1917] focus:outline-none"
               />
             </div>
@@ -205,7 +206,7 @@ export const ReviewsSection: React.FC = () => {
                 disabled={submitting}
                 className="bg-[#1B1917] px-6 py-3 text-[11.5px] font-medium uppercase tracking-[0.15em] text-[#FAF8F5] transition hover:bg-[#332E2A] disabled:opacity-60"
               >
-                {submitting ? "Publishing..." : "Publish Review"}
+                {submitting ? "در حال انتشار…" : "ثبت دیدگاه"}
               </button>
             </div>
           </form>
@@ -246,13 +247,13 @@ export const ReviewsSection: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setActiveProduct(linkedProduct)}
-                      className="mt-1 text-left text-[11.5px] text-[#A64B2A] underline-offset-4 hover:underline"
+                      className="mt-1 text-right text-[11.5px] text-[#A64B2A] underline-offset-4 hover:underline"
                     >
-                      Verified · {rev.productTitle}
+                      تأییدشده · {rev.productTitle}
                     </button>
                   ) : (
                     <p className="mt-1 text-[11.5px] text-[#7A7168]">
-                      Verified · {rev.productTitle}
+                      تأییدشده · {rev.productTitle}
                     </p>
                   )}
                 </div>

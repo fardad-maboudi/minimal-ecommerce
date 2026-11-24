@@ -45,7 +45,7 @@ export function getEffectivePrice(product: StoreProduct): number {
 
 export function formatMoney(amount: number): string {
   const hasCents = Math.abs(amount % 1) > 0.005;
-  return new Intl.NumberFormat("en-US", {
+  return new Intl.NumberFormat("fa-IR", {
     style: "currency",
     currency: "USD",
     minimumFractionDigits: hasCents ? 2 : 0,
@@ -196,8 +196,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
   );
   const [connectionStatusText, setConnectionStatusText] = useState<string>(
     initialConfig.appId
-      ? `Connecting to ${initialConfig.appId}...`
-      : "Standby · Curated showcase active (ready for your Joorchin App ID)"
+      ? `در حال اتصال به ${initialConfig.appId}…`
+      : "آماده‌به‌کار · فروشگاه نمونه فعال است (شناسه Joorchin را برای اتصال وارد کنید)"
   );
 
   const [products, setProducts] = useState<StoreProduct[]>(CURATED_PRODUCTS);
@@ -327,7 +327,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
           setUser({
             id: me.id ? String(me.id) : undefined,
             phone: String(me.phone || me.username || ""),
-            fullName: String(me.fullName || me.name || "Studio Member"),
+            fullName: String(me.fullName || me.name || "عضو استودیو"),
             email: String(me.email || ""),
             role: "customer",
             isLiveSession: true,
@@ -362,14 +362,14 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
 
       if (!next.appId.trim()) {
         setConnectionMode("standby");
-        return { ok: true, message: "Switched to curated local mode." };
+        return { ok: true, message: "حالت محلیِ محصولات منتخب فعال شد." };
       }
 
       if (res.isLive) {
         setConnectionMode("connected");
         const pushSt = await service.getPushStatus();
         setPushState(pushSt);
-        showToast(`Connected to Joorchin app ${next.appId.trim()}`);
+        showToast(`به فروشگاه Joorchin متصل شد: ${next.appId.trim()}`);
         return { ok: true, message: res.message };
       }
 
@@ -392,9 +392,9 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsLiveCatalog(false);
     setConnectionMode("standby");
     setConnectionStatusText(
-      "Standby · Curated showcase active (ready for your Joorchin App ID)"
+      "آماده‌به‌کار · فروشگاه نمونه فعال است (شناسه Joorchin را برای اتصال وارد کنید)"
     );
-    showToast("Disconnected — returned to curated preview catalog");
+    showToast("اتصال قطع شد؛ فهرست پیش‌نمایش محصولات بازیابی شد.");
   }, [joorchinConfig.serverUrl, service, showToast]);
 
   const jumpToCategory = useCallback((cat: ProductCategoryId) => {
@@ -417,7 +417,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     ) => {
       const qty = Math.max(1, options?.quantity ?? 1);
-      const selectedColor = options?.color ?? product.colors[0]?.name ?? "Signature";
+      const selectedColor = options?.color ?? product.colors[0]?.name ?? "ویژه";
       const key = `${product.id}__${selectedColor}__${options?.bundleLabel ?? "single"}`;
 
       setCart((prev) => {
@@ -446,7 +446,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
       if (options?.openDrawer !== false) {
         setCartOpen(true);
       } else {
-        showToast(`Added ${product.title} to bag`, "View bag", () => setCartOpen(true));
+        showToast(`${product.title} به سبد خرید افزوده شد`, "مشاهده سبد", () => setCartOpen(true));
       }
     },
     [service, showToast]
@@ -460,7 +460,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
         for (const product of items) {
           const base = getEffectivePrice(product);
           const discounted = Math.round(base * multiplier * 100) / 100;
-          const color = product.colors[0]?.name ?? "Signature";
+          const color = product.colors[0]?.name ?? "ویژه";
           const key = `${product.id}__${color}__${bundleName}`;
           const existingIdx = next.findIndex((c) => c.id === key);
           if (existingIdx >= 0) {
@@ -484,7 +484,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
         return next;
       });
       setCartOpen(true);
-      showToast(`${bundleName} added (${discountPercent}% saved)`);
+      showToast(`${bundleName} به سبد افزوده شد (${discountPercent}٪ تخفیف)`);
     },
     [service, showToast]
   );
@@ -538,7 +538,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
       const res = await service.validateVoucher(code, cartSubtotal);
       if (res.voucher) {
         setVoucher(res.voucher);
-        showToast(`Code ${res.voucher.code} applied — ${res.voucher.label}`);
+        showToast(`کد ${res.voucher.code} اعمال شد — ${res.voucher.label}`);
         return { ok: true };
       }
       return { ok: false, error: res.error };
@@ -556,11 +556,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
         const exists = prev.includes(productId);
         const prod = products.find((p) => p.id === productId);
         if (exists) {
-          if (prod) showToast(`Removed ${prod.title} from saved items`);
+          if (prod) showToast(`${prod.title} از علاقه‌مندی‌ها حذف شد`);
           return prev.filter((id) => id !== productId);
         }
         if (prod) {
-          showToast(`Saved ${prod.title}`, "Saved list", () => {
+          showToast(`${prod.title} ذخیره شد`, "علاقه‌مندی‌ها", () => {
             setAccountTab("wishlist");
             setAccountOpen(true);
           });
@@ -623,7 +623,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
         productId: prod.id,
         productTitle: prod.title,
         customerName: input.customerName.trim(),
-        location: input.location.trim() || "Verified Home",
+        location: input.location.trim() || "خانه تأییدشده",
         comment: input.comment.trim(),
         rating: input.rating,
         isPositive: input.rating >= 4,
@@ -631,7 +631,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
         verified: true,
       });
       setReviews((prev) => [saved, ...prev]);
-      showToast("Thank you — your review is now live.");
+      showToast("سپاس از شما؛ دیدگاهتان منتشر شد.");
     },
     [products, service, showToast]
   );
@@ -639,7 +639,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
   const logoutUser = useCallback(async () => {
     await service.logout();
     setUser(null);
-    showToast("Signed out safely.");
+    showToast("با موفقیت خارج شدید.");
   }, [service, showToast]);
 
   const subscribePush = useCallback(async () => {
@@ -652,7 +652,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
   const unsubscribePush = useCallback(async () => {
     const next = await service.unsubscribePush();
     setPushState(next);
-    showToast("Drop alerts turned off.");
+    showToast("اعلان مجموعه‌های جدید خاموش شد.");
   }, [service, showToast]);
 
   const openAccount = useCallback((tab: "signin" | "orders" | "wishlist" = "signin") => {

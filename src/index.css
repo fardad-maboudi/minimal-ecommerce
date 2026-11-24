@@ -16,9 +16,29 @@
   }
 
   html {
-    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: "Vazirmatn", Tahoma, sans-serif;
     background-color: var(--bg-canvas);
     color: var(--ink);
+    direction: rtl;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: "Vazirmatn", Tahoma, sans-serif;
+    direction: rtl;
+  }
+
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  input[type="email"],
+  input[type="url"],
+  input[type="tel"] {
+    direction: ltr;
+    text-align: right;
   }
 
   button,
@@ -28,15 +48,27 @@
 }
 
 .font-serif-display {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: "Vazirmatn", Tahoma, sans-serif;
 }
 
 .font-sans-ui {
-  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Vazirmatn", Tahoma, sans-serif;
 }
 
 .font-mono-tech {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Vazirmatn", Tahoma, sans-serif;
+  direction: ltr;
+  unicode-bidi: plaintext;
+}
+
+/* Persian typography reads best without the wide tracking used in the original Latin editorial design. */
+html[dir="rtl"] :is(p, h1, h2, h3, button, label, th, dt, option, select) {
+  letter-spacing: normal !important;
+}
+
+html[dir="rtl"] .lucide-arrow-right,
+html[dir="rtl"] .lucide-arrow-left {
+  transform: scaleX(-1);
 }
 
 .tabular-nums {

@@ -21,19 +21,19 @@ export const RitualBundleBuilder: React.FC = () => {
       {
         key: "morning",
         step: "01",
-        title: "Morning Vessel",
+        title: "آیین قهوه صبحگاهی",
         options: morning.length ? morning : products.slice(0, 3),
       },
       {
         key: "ambient",
         step: "02",
-        title: "Light & Stone",
+        title: "نور و سنگ",
         options: ambient.length ? ambient : products.slice(1, 4),
       },
       {
         key: "tactile",
         step: "03",
-        title: "Scent & Textile",
+        title: "رایحه و پارچه",
         options: tactile.length ? tactile : products.slice(3, 6),
       },
     ];
@@ -71,15 +71,13 @@ export const RitualBundleBuilder: React.FC = () => {
         <div className="flex flex-col justify-between gap-6 border-b border-[#DFD7CC] pb-8 md:flex-row md:items-end">
           <div className="max-w-[540px]">
             <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#A64B2A]">
-              Bundle & Save up to 22%
+              ست بسازید و تا ۲۲٪ تخفیف بگیرید
             </p>
             <h2 className="font-serif-display mt-2 text-[36px] font-normal leading-[1.08] text-[#1B1917] sm:text-[48px]">
-              Curated ritual sets
+              ست‌های آیینی منتخب
             </h2>
             <p className="mt-2.5 text-[14.5px] leading-relaxed text-[#665F57]">
-              Pair complementary pieces from the archive, arrive wrapped in raw
-              cotton ribbon with a handwritten cedar gift card and complimentary
-              express delivery.
+              محصولات هماهنگ را کنار هم انتخاب کنید؛ با نوار کتان خام و کارت هدیه دست‌نویس بسته‌بندی می‌شوند و ارسال سریع رایگان دارند.
             </p>
           </div>
 
@@ -93,7 +91,7 @@ export const RitualBundleBuilder: React.FC = () => {
                   : "text-[#665F57] hover:text-[#1B1917]"
               }`}
             >
-              Curated Sets
+              ست‌های منتخب
             </button>
             <button
               type="button"
@@ -104,7 +102,7 @@ export const RitualBundleBuilder: React.FC = () => {
                   : "text-[#665F57] hover:text-[#1B1917]"
               }`}
             >
-              Build Your Trio
+              ست سه‌تایی خود را بسازید
             </button>
           </div>
         </div>
@@ -141,7 +139,7 @@ export const RitualBundleBuilder: React.FC = () => {
                         loading="lazy"
                         className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
                       />
-                      <span className="absolute left-4 top-4 bg-[#FAF8F5]/95 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-[#A64B2A]">
+                      <span className="absolute right-4 top-4 bg-[#FAF8F5]/95 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-[#A64B2A]">
                         {bundle.tagline}
                       </span>
                     </div>
@@ -185,7 +183,7 @@ export const RitualBundleBuilder: React.FC = () => {
                         </span>
                       </div>
                       <p className="text-[11px] font-medium text-[#A64B2A]">
-                        You save {formatMoney(saved)}
+                        صرفه‌جویی شما {formatMoney(saved)}
                       </p>
                     </div>
 
@@ -200,7 +198,7 @@ export const RitualBundleBuilder: React.FC = () => {
                       }
                       className="bg-[#1B1917] px-5 py-3 text-[11px] font-medium uppercase tracking-[0.15em] text-[#FAF8F5] transition hover:bg-[#332E2A]"
                     >
-                      Add Set
+                      افزودن ست
                     </button>
                   </div>
                 </article>
@@ -219,11 +217,11 @@ export const RitualBundleBuilder: React.FC = () => {
                         {slot.step}
                       </span>
                       <h3 className="font-serif-display text-[25px] text-[#1B1917]">
-                        Choose {slot.title}
+                        انتخاب {slot.title}
                       </h3>
                     </div>
                     <span className="text-[11px] uppercase tracking-[0.12em] text-[#7F766D]">
-                      {picked[slot.key] ? "Selected" : "Optional"}
+                      {picked[slot.key] ? "انتخاب‌شده" : "دلخواه"}
                     </span>
                   </div>
 
@@ -249,7 +247,7 @@ export const RitualBundleBuilder: React.FC = () => {
                               className="h-full w-full object-cover"
                             />
                             {active && (
-                              <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#1B1917] text-[#FAF8F5]">
+                              <span className="absolute left-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#1B1917] text-[#FAF8F5]">
                                 <Check className="h-3 w-3" />
                               </span>
                             )}
@@ -276,10 +274,10 @@ export const RitualBundleBuilder: React.FC = () => {
                 <div className="flex items-center justify-between border-b border-[#E5DED4] pb-4">
                   <span className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-[#A64B2A]">
                     <Gift className="h-3.5 w-3.5" />
-                    Your Custom Trio
+                    ست دلخواه شما
                   </span>
                   <span className="tabular-nums text-[12px] font-medium text-[#1B1917]">
-                    {selectedItems.length} / 3 picked
+                    {selectedItems.length} / 3 انتخاب‌شده
                   </span>
                 </div>
 
@@ -288,17 +286,17 @@ export const RitualBundleBuilder: React.FC = () => {
                   {selectedItems.length >= 3 ? (
                     <span className="flex items-center gap-1.5 font-medium text-[#1B1917]">
                       <Sparkles className="h-3.5 w-3.5 text-[#A64B2A]" />
-                      Maximum 22% Trio tier unlocked + free gift wrap
+                      تخفیف ۲۲٪ ست سه‌تایی فعال شد؛ بسته‌بندی هدیه رایگان
                     </span>
                   ) : selectedItems.length === 2 ? (
                     <span>
-                      15% Duo savings active — select 1 more piece to unlock{" "}
-                      <strong className="text-[#A64B2A]">22% off</strong>.
+                      تخفیف ۱۵٪ ست دوتایی فعال است؛ برای تخفیف بیشتر یک محصول دیگر انتخاب کنید{" "}
+                      <strong className="text-[#A64B2A]">۲۲٪ تخفیف</strong>.
                     </span>
                   ) : (
                     <span>
-                      Select 2 pieces for <strong>15% off</strong>, or 3 for{" "}
-                      <strong className="text-[#A64B2A]">22% off</strong>.
+                      با انتخاب ۲ محصول، <strong>۱۵٪ تخفیف</strong> می‌گیرید؛ برای ۳ محصول{" "}
+                      <strong className="text-[#A64B2A]">۲۲٪ تخفیف</strong>.
                     </span>
                   )}
                 </div>
@@ -326,24 +324,24 @@ export const RitualBundleBuilder: React.FC = () => {
                   ))}
                   {selectedItems.length === 0 && (
                     <li className="py-8 text-center text-[13px] text-[#7A7168]">
-                      Choose items on the left to assemble your gift box.
+                      برای ساخت جعبه هدیه، محصولات را از فهرست انتخاب کنید.
                     </li>
                   )}
                 </ul>
 
                 <div className="mt-4 space-y-2 border-t border-[#E5DED4] pt-4 text-[13px] tabular-nums">
                   <div className="flex justify-between text-[#665F57]">
-                    <span>Items total</span>
+                    <span>جمع محصولات</span>
                     <span>{formatMoney(rawTotal)}</span>
                   </div>
                   {customDiscount > 0 && (
                     <div className="flex justify-between font-medium text-[#A64B2A]">
-                      <span>Set discount ({customDiscount}%)</span>
+                      <span>تخفیف ست ({customDiscount}%)</span>
                       <span>−{formatMoney(savedAmount)}</span>
                     </div>
                   )}
                   <div className="flex justify-between border-t border-[#ECE5DC] pt-3 text-[16px] font-semibold text-[#1B1917]">
-                    <span>Set total</span>
+                    <span>قیمت ست</span>
                     <span>{formatMoney(finalTotal)}</span>
                   </div>
                 </div>
@@ -355,14 +353,14 @@ export const RitualBundleBuilder: React.FC = () => {
                     addBundleToCart(
                       selectedItems,
                       customDiscount,
-                      selectedItems.length === 3 ? "Custom Ritual Trio" : "Custom Ritual Duo"
+                      selectedItems.length === 3 ? "ست سه‌تایی دلخواه" : "ست دوتایی دلخواه"
                     )
                   }
                   className="mt-6 w-full bg-[#1B1917] py-4 text-[11.5px] font-medium uppercase tracking-[0.16em] text-[#FAF8F5] transition hover:bg-[#342F2A] disabled:cursor-not-allowed disabled:bg-[#C7BEB2]"
                 >
                   {selectedItems.length < 2
-                    ? "Pick at least 2 objects"
-                    : `Add Set · Save ${formatMoney(savedAmount)}`}
+                    ? "دست‌کم ۲ محصول انتخاب کنید"
+                    : `افزودن ست · Save ${formatMoney(savedAmount)}`}
                 </button>
               </div>
             </aside>

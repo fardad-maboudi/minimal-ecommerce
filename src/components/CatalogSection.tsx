@@ -6,22 +6,25 @@ import {
   useStore,
 } from "../context/StoreContext";
 import type { ProductCategoryId, StoreProduct } from "../types/store";
+import { toPersianDigits } from "../utils/localization";
 
 const FILTER_TABS: { id: ProductCategoryId; label: string }[] = [
-  { id: "all", label: "All Objects" },
-  { id: "coffee", label: "Coffee" },
-  { id: "lighting", label: "Lighting" },
-  { id: "botanical", label: "Botanical" },
-  { id: "textiles", label: "Linen" },
-  { id: "objects", label: "Table Objects" },
+  { id: "all", label: "همه محصولات" },
+  { id: "coffee", label: "قهوه" },
+  { id: "lighting", label: "روشنایی" },
+  { id: "botanical", label: "رایحه گیاهی" },
+  { id: "textiles", label: "کتان" },
+  { id: "objects", label: "اکسسوری میز" },
 ];
 
 type SortOption = "featured" | "price-asc" | "price-desc" | "rating" | "sale";
 
+const BADGE_LABELS: Record<string, string> = { Bestseller: "پرفروش", "Limited Run": "تولید محدود", New: "تازه" };
+
 const ProductCard: React.FC<{ product: StoreProduct }> = ({ product }) => {
   const { addToCart, wishlist, toggleWishlist, setActiveProduct } = useStore();
   const [selectedColor, setSelectedColor] = useState(
-    product.colors[0]?.name ?? "Signature"
+    product.colors[0]?.name ?? "ویژه"
   );
   const [justAdded, setJustAdded] = useState(false);
 
@@ -63,7 +66,7 @@ const ProductCard: React.FC<{ product: StoreProduct }> = ({ product }) => {
         {altImage && (
           <img
             src={altImage}
-            alt={`${product.title} alternate studio angle`}
+            alt={`نمایی دیگر از ${product.title}`}
             loading="lazy"
             className="absolute inset-0 h-full w-full object-cover opacity-0 transition duration-700 ease-out group-hover:scale-[1.03] group-hover:opacity-100"
           />
@@ -72,13 +75,13 @@ const ProductCard: React.FC<{ product: StoreProduct }> = ({ product }) => {
         {/* Single calm top-left marker */}
         {(hasSale || product.badge) && (
           <span
-            className={`absolute left-3 top-3 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.14em] ${
+            className={`absolute right-3 top-3 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.14em] ${
               hasSale
                 ? "bg-[#A64B2A] text-[#FAF8F5]"
                 : "bg-[#FAF8F5]/92 text-[#1B1917]"
             }`}
           >
-            {hasSale ? `−${product.discountPercent}%` : product.badge}
+            {hasSale ? `−${toPersianDigits(product.discountPercent)}٪` : BADGE_LABELS[product.badge ?? ""] ?? product.badge}
           </span>
         )}
 
@@ -89,8 +92,8 @@ const ProductCard: React.FC<{ product: StoreProduct }> = ({ product }) => {
             e.stopPropagation();
             toggleWishlist(product.id);
           }}
-          aria-label={isSaved ? `Remove ${product.title} from saved` : `Save ${product.title}`}
-          className={`absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#FAF8F5]/85 backdrop-blur-xs transition ${
+          aria-label={isSaved ? `حذف ${product.title} از علاقه‌مندی‌ها` : `افزودن ${product.title} به علاقه‌مندی‌ها`}
+          className={`absolute left-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#FAF8F5]/85 backdrop-blur-xs transition ${
             isSaved
               ? "text-[#A64B2A] opacity-100"
               : "text-[#453F3A] opacity-0 hover:text-[#1B1917] group-hover:opacity-100 sm:focus:opacity-100"
@@ -109,10 +112,10 @@ const ProductCard: React.FC<{ product: StoreProduct }> = ({ product }) => {
           >
             <Plus className="h-3.5 w-3.5 stroke-[1.75]" />
             {product.stock <= 0
-              ? "Sold Out"
+              ? "ناموجود"
               : justAdded
-                ? "Added to Bag"
-                : `Quick Add · ${formatMoney(effectivePrice)}`}
+                ? "به سبد افزوده شد"
+                : `افزودن سریع · ${formatMoney(effectivePrice)}`}
           </button>
         </div>
       </div>
@@ -125,7 +128,7 @@ const ProductCard: React.FC<{ product: StoreProduct }> = ({ product }) => {
               <button
                 type="button"
                 onClick={() => setActiveProduct(product)}
-                className="text-left transition hover:text-[#A64B2A]"
+                className="text-right transition hover:text-[#A64B2A]"
               >
                 {product.title}
               </button>
@@ -146,9 +149,9 @@ const ProductCard: React.FC<{ product: StoreProduct }> = ({ product }) => {
           </p>
         </div>
 
-        {/* Finish swatches + mobile quick add */}
+        {/* رنگ‌بندی محصول + mobile quick add */}
         <div className="mt-3 flex items-center justify-between">
-          <div className="flex items-center gap-1.5" aria-label="Finish swatches">
+          <div className="flex items-center gap-1.5" aria-label="رنگ‌بندی محصول">
             {product.colors.map((swatch) => {
               const active = swatch.name === selectedColor;
               return (
@@ -156,7 +159,7 @@ const ProductCard: React.FC<{ product: StoreProduct }> = ({ product }) => {
                   key={swatch.name}
                   type="button"
                   title={swatch.name}
-                  aria-label={`Finish ${swatch.name}`}
+                  aria-label={`رنگ ${swatch.name}`}
                   onClick={() => setSelectedColor(swatch.name)}
                   className={`h-3.5 w-3.5 rounded-full border transition ${
                     active
@@ -225,11 +228,11 @@ export const CatalogSection: React.FC = () => {
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#A64B2A]">
               {isLiveCatalog
-                ? `Live Catalog · App ${joorchinConfig.appId}`
-                : "Autumn Archive"}
+                ? `فهرست زنده محصولات · اپلیکیشن ${joorchinConfig.appId}`
+                : "مجموعه پاییز"}
             </p>
             <h2 className="font-serif-display mt-2 text-[36px] font-normal leading-[1.08] text-[#1B1917] sm:text-[46px]">
-              Signature pieces
+              محصولات منتخب
             </h2>
           </div>
 
@@ -238,17 +241,17 @@ export const CatalogSection: React.FC = () => {
               <button
                 type="button"
                 onClick={() => void refreshCatalog()}
-                aria-label="Sync Joorchin catalog"
+                aria-label="همگام‌سازی محصولات"
                 className="inline-flex h-9 items-center gap-1.5 border border-[#DDD4C8] px-3 text-[11px] uppercase tracking-[0.12em] text-[#453F3A] transition hover:border-[#1B1917] hover:text-[#1B1917]"
               >
                 <RefreshCw
                   className={`h-3 w-3 ${catalogLoading ? "animate-spin" : ""}`}
                 />
-                Sync
+                همگام‌سازی
               </button>
             )}
             <label className="sr-only" htmlFor="catalog-sort">
-              Sort products
+              مرتب‌سازی محصولات
             </label>
             <select
               id="catalog-sort"
@@ -256,11 +259,11 @@ export const CatalogSection: React.FC = () => {
               onChange={(e) => setSortBy(e.target.value as SortOption)}
               className="h-9 border border-[#DDD4C8] bg-transparent px-3 text-[12px] text-[#1B1917] focus:border-[#1B1917] focus:outline-none"
             >
-              <option value="featured">Sort: Featured</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="rating">Highest Rated</option>
-              <option value="sale">On Seasonal Offer</option>
+              <option value="featured">مرتب‌سازی: منتخب</option>
+              <option value="price-asc">قیمت: از کم به زیاد</option>
+              <option value="price-desc">قیمت: از زیاد به کم</option>
+              <option value="rating">بالاترین امتیاز</option>
+              <option value="sale">تخفیف فصلی</option>
             </select>
           </div>
         </div>
@@ -290,7 +293,7 @@ export const CatalogSection: React.FC = () => {
             })}
           </div>
           <span className="hidden shrink-0 pb-3.5 tabular-nums text-[12px] text-[#7A7168] sm:inline">
-            {filtered.length} {filtered.length === 1 ? "object" : "objects"}
+            {toPersianDigits(filtered.length)} محصول
           </span>
         </div>
 
@@ -308,14 +311,14 @@ export const CatalogSection: React.FC = () => {
         ) : filtered.length === 0 ? (
           <div className="py-20 text-center">
             <p className="font-serif-display text-2xl text-[#1B1917]">
-              No pieces in this view yet.
+              در این دسته هنوز محصولی وجود ندارد.
             </p>
             <button
               type="button"
               onClick={() => setSelectedCategory("all")}
               className="mt-4 border-b border-[#1B1917] pb-0.5 text-xs uppercase tracking-[0.14em]"
             >
-              Show all objects
+              نمایش همه محصولات
             </button>
           </div>
         ) : (

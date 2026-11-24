@@ -2,10 +2,10 @@ import React from "react";
 import { ArrowRight } from "lucide-react";
 
 const PILLARS = [
-  { label: "Small-batch craft", note: "Kyoto, Lisbon, Grasse & Kortrijk" },
-  { label: "Free express shipping", note: "On every order over $150" },
-  { label: "60-day home trial", note: "Prepaid, effortless returns" },
-  { label: "5-year repair care", note: "Spare parts held permanently" },
+  { label: "ساخت در تیراژ محدود", note: "کیوتو، لیسبون، گراس و کورتریک" },
+  { label: "ارسال سریع رایگان", note: "برای سفارش‌های بالای ۱۵۰ دلار" },
+  { label: "۶۰ روز فرصت تجربه در خانه", note: "مرجوعی آسان با هزینه پرداخت‌شده" },
+  { label: "پشتیبانی تعمیر ۵ ساله", note: "تأمین همیشگی قطعات یدکی" },
 ];
 
 export const Hero: React.FC = () => {
@@ -15,7 +15,7 @@ export const Hero: React.FC = () => {
       <div className="relative h-[78vh] min-h-[540px] max-h-[820px] w-full overflow-hidden bg-[#26211D]">
         <img
           src="/images/hero-main.jpg"
-          alt="Sunlit limestone table styled with Solèn matte pour-over kettle, speckled raw stoneware cups, and Belgian flax linen"
+          alt="میز سنگ آهکی در نور آفتاب با کتری دم‌آوری مات سولن، فنجان‌های سرامیکی خال‌دار و کتان بلژیکی"
           className="h-full w-full object-cover object-center"
         />
         {/* Crisp editorial scrim tuned for clean text contrast while leaving photo radiant */}
@@ -23,7 +23,7 @@ export const Hero: React.FC = () => {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(96deg, rgba(24,20,17,0.68) 0%, rgba(24,20,17,0.38) 48%, rgba(24,20,17,0.12) 100%)",
+              "linear-gradient(264deg, rgba(24,20,17,0.68) 0%, rgba(24,20,17,0.38) 48%, rgba(24,20,17,0.12) 100%)",
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#181411]/45 via-transparent to-transparent" />
@@ -31,30 +31,28 @@ export const Hero: React.FC = () => {
         <div className="relative z-10 mx-auto flex h-full max-w-[1380px] flex-col justify-end px-5 pb-14 sm:justify-center sm:px-8 sm:pb-0 lg:px-12">
           <div className="max-w-[560px]">
             <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.24em] text-[#EDE5DA]/90">
-              Autumn Edition · 2026
+              نسخه پاییزه · ۲۰۲۶
             </p>
             <h1 className="font-serif-display text-[46px] font-normal leading-[1.03] tracking-[-0.01em] text-[#FAF8F5] sm:text-[62px] lg:text-[72px]">
-              Objects shaped for{" "}
-              <em className="font-normal italic">slower</em> mornings.
+              اشیایی برای{" "}
+              <em className="font-normal italic">صبح‌هایی آرام‌تر</em>.
             </h1>
             <p className="mt-5 max-w-[440px] text-[15px] leading-[1.68] text-[#EFE9E1]/90 sm:text-[16px]">
-              Architectural stoneware, weighted pour-over tools, cordless warm
-              lighting, and cold-pressed home botanicals — crafted directly with
-              family ateliers.
+              ظروف سرامیکی دست‌ساز، ابزار دم‌آوری دقیق، چراغ‌های بی‌سیم و رایحه‌های گیاهی طبیعی؛ ساخته‌شده با همراهی کارگاه‌های خانوادگی.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4 sm:gap-6">
               <a
                 href="#catalog"
                 className="group inline-flex items-center gap-2.5 bg-[#FAF8F5] px-7 py-3.5 text-[12.5px] font-medium uppercase tracking-[0.14em] text-[#1B1917] transition hover:bg-[#EFE8DF]"
               >
-                Shop Collection
+                خرید مجموعه
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
               </a>
               <a
                 href="#bundles"
                 className="border-b border-[#FAF8F5]/65 pb-1 text-[12.5px] font-medium uppercase tracking-[0.14em] text-[#FAF8F5] transition hover:border-[#FAF8F5]"
               >
-                Build a Set · Save 22%
+                ساخت ست · ۲۲٪ صرفه‌جویی
               </a>
             </div>
           </div>

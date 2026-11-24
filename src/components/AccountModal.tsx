@@ -7,6 +7,7 @@ import {
 } from "../context/StoreContext";
 import { getSdkErrorMessage } from "../lib/joorchin";
 import type { OrderStatus } from "../types/store";
+import { localizeOrderStatus, toPersianDigits } from "../utils/localization";
 
 const ORDER_STEPS: OrderStatus[] = [
   "PENDING",
@@ -97,7 +98,7 @@ export const AccountModal: React.FC = () => {
       setUser({
         id: u?.id ? String(u.id) : undefined,
         phone: phone.trim(),
-        fullName: String(u?.fullName || u?.name || "Studio Member"),
+        fullName: String(u?.fullName || u?.name || "عضو استودیو"),
         email: String(u?.email || ""),
         role: "customer",
         isLiveSession: res.live,
@@ -105,7 +106,7 @@ export const AccountModal: React.FC = () => {
       setOtpSent(false);
       setOtpCode("");
       setAuthMsg("");
-      showToast("Signed in to your SOLÈN account");
+      showToast("به حساب سولن وارد شدید");
     } catch (err) {
       setAuthError(getSdkErrorMessage(err));
     } finally {
@@ -123,13 +124,13 @@ export const AccountModal: React.FC = () => {
       setUser({
         id: u?.id ? String(u.id) : undefined,
         phone: phone.trim(),
-        fullName: String(u?.fullName || u?.name || "Studio Member"),
+        fullName: String(u?.fullName || u?.name || "عضو استودیو"),
         email: String(u?.email || ""),
         role: "customer",
         isLiveSession: res.live,
       });
       setPassword("");
-      showToast("Welcome back to SOLÈN");
+      showToast("به سولن خوش آمدید");
     } catch (err) {
       setAuthError(getSdkErrorMessage(err));
     } finally {
@@ -147,7 +148,7 @@ export const AccountModal: React.FC = () => {
         await service.updateMe({ fullName: editName.trim(), email: editEmail.trim() });
       }
       setUser({ ...user, fullName: editName.trim(), email: editEmail.trim() });
-      showToast("Profile updated");
+      showToast("پروفایل به‌روزرسانی شد");
     } catch (err) {
       setAuthError(getSdkErrorMessage(err));
     } finally {
@@ -165,18 +166,18 @@ export const AccountModal: React.FC = () => {
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Member account"
+        aria-label="حساب کاربری اعضا"
         className="animate-fade-slide relative z-10 flex max-h-[88vh] w-full max-w-[580px] flex-col bg-[#FAF8F5] shadow-2xl"
       >
         {/* Top title */}
         <div className="flex items-center justify-between border-b border-[#E5DED4] px-6 py-5">
           <h2 className="font-serif-display text-[28px] font-normal text-[#1B1917]">
-            {user ? `Hello, ${user.fullName.split(" ")[0]}` : "SOLÈN Account"}
+            {user ? `سلام، ${user.fullName.split(" ")[0]}` : "حساب سولن"}
           </h2>
           <button
             type="button"
             onClick={() => setAccountOpen(false)}
-            aria-label="Close account dialog"
+            aria-label="بستن پنجره حساب کاربری"
             className="p-1 text-[#665F57] hover:text-[#1B1917]"
           >
             <X className="h-4 w-4" />
@@ -186,9 +187,9 @@ export const AccountModal: React.FC = () => {
         {/* Underline Tabs */}
         <div className="flex gap-6 border-b border-[#E5DED4] px-6">
           {[
-            { id: "signin", label: user ? "Profile" : "Sign In", icon: User },
-            { id: "orders", label: `Orders (${orders.length})`, icon: Package },
-            { id: "wishlist", label: `Saved (${savedProducts.length})`, icon: Heart },
+            { id: "signin", label: user ? "پروفایل" : "ورود", icon: User },
+            { id: "orders", label: `سفارش‌ها (${toPersianDigits(orders.length)})`, icon: Package },
+            { id: "wishlist", label: `علاقه‌مندی‌ها (${toPersianDigits(savedProducts.length)})`, icon: Heart },
           ].map((item) => {
             const Icon = item.icon;
             const active = tab === item.id;
@@ -224,8 +225,8 @@ export const AccountModal: React.FC = () => {
                     <p className="font-medium text-[#1B1917]">{user.phone}</p>
                     <p className="text-[#665F57]">
                       {user.isLiveSession
-                        ? `Live Joorchin customer session (${joorchinConfig.appId})`
-                        : "Preview session · Connect App ID for live SMS auth"}
+                        ? `نشست زنده مشتری در فروشگاه (${joorchinConfig.appId})`
+                        : "حالت پیش‌نمایش · برای ورود پیامکی شناسه فروشگاه را متصل کنید"}
                     </p>
                   </div>
                   <button
@@ -233,13 +234,13 @@ export const AccountModal: React.FC = () => {
                     onClick={() => void logoutUser()}
                     className="inline-flex items-center gap-1 text-[11.5px] font-medium text-[#A64B2A] hover:underline"
                   >
-                    <LogOut className="h-3.5 w-3.5" /> Sign out
+                    <LogOut className="h-3.5 w-3.5" /> خروج
                   </button>
                 </div>
 
                 <div>
                   <label className="block text-[11px] uppercase tracking-[0.14em] text-[#7A7168]">
-                    Full Name
+                    نام کامل
                   </label>
                   <input
                     type="text"
@@ -250,7 +251,7 @@ export const AccountModal: React.FC = () => {
                 </div>
                 <div>
                   <label className="block text-[11px] uppercase tracking-[0.14em] text-[#7A7168]">
-                    Email Address
+                    نشانی ایمیل
                   </label>
                   <input
                     type="email"
@@ -268,17 +269,17 @@ export const AccountModal: React.FC = () => {
                   disabled={busy}
                   className="bg-[#1B1917] px-6 py-3 text-[11.5px] font-medium uppercase tracking-[0.15em] text-[#FAF8F5] transition hover:bg-[#322D29]"
                 >
-                  {busy ? "Saving…" : "Save Profile"}
+                  {busy ? "در حال ذخیره…" : "ذخیره پروفایل"}
                 </button>
               </form>
             ) : (
               <div>
                 <p className="text-[13px] leading-relaxed text-[#665F57]">
-                  Sign in or create your customer account automatically via{" "}
+                  با استفاده از روش زیر وارد شوید یا حساب کاربری خود را بسازید{" "}
                   <code className="font-mono-tech text-[11.5px] text-[#1B1917]">
                     client.auth
                   </code>{" "}
-                  — phone OTP or password supported.
+                  — ورود با کد پیامکی یا گذرواژه امکان‌پذیر است.
                 </p>
 
                 <div className="mt-4 inline-flex border border-[#DDD4C8] bg-[#F3EEE7] p-0.5 text-[11px]">
@@ -294,7 +295,7 @@ export const AccountModal: React.FC = () => {
                         : "text-[#665F57]"
                     }`}
                   >
-                    Phone OTP
+                    کد پیامکی
                   </button>
                   <button
                     type="button"
@@ -308,7 +309,7 @@ export const AccountModal: React.FC = () => {
                         : "text-[#665F57]"
                     }`}
                   >
-                    Password
+                    گذرواژه
                   </button>
                 </div>
 
@@ -317,7 +318,7 @@ export const AccountModal: React.FC = () => {
                     <form onSubmit={handleRequestOtp} className="mt-5 space-y-4">
                       <div>
                         <label className="block text-[11px] uppercase tracking-[0.14em] text-[#7A7168]">
-                          Mobile Number
+                          شماره موبایل
                         </label>
                         <input
                           required
@@ -336,7 +337,7 @@ export const AccountModal: React.FC = () => {
                         disabled={busy}
                         className="w-full bg-[#1B1917] py-3.5 text-[11.5px] font-medium uppercase tracking-[0.16em] text-[#FAF8F5] hover:bg-[#332E2A] disabled:opacity-60"
                       >
-                        {busy ? "Sending code…" : "Send Verification Code"}
+                        {busy ? "در حال ارسال کد…" : "ارسال کد تأیید"}
                       </button>
                     </form>
                   ) : (
@@ -348,7 +349,7 @@ export const AccountModal: React.FC = () => {
                       )}
                       <div>
                         <label className="block text-[11px] uppercase tracking-[0.14em] text-[#7A7168]">
-                          One-Time Code for {phone}
+                          کد یک‌بارمصرف برای {phone}
                         </label>
                         <input
                           required
@@ -372,14 +373,14 @@ export const AccountModal: React.FC = () => {
                           }}
                           className="border border-[#D8CFC3] px-4 py-3 text-[11.5px] uppercase tracking-[0.12em] text-[#665F57]"
                         >
-                          Back
+                          بازگشت
                         </button>
                         <button
                           type="submit"
                           disabled={busy}
                           className="flex-1 bg-[#1B1917] py-3 text-[11.5px] font-medium uppercase tracking-[0.16em] text-[#FAF8F5] hover:bg-[#332E2A]"
                         >
-                          {busy ? "Verifying…" : "Verify & Sign In"}
+                          {busy ? "در حال تأیید…" : "تأیید و ورود"}
                         </button>
                       </div>
                     </form>
@@ -388,7 +389,7 @@ export const AccountModal: React.FC = () => {
                   <form onSubmit={handlePasswordLogin} className="mt-5 space-y-4">
                     <div>
                       <label className="block text-[11px] uppercase tracking-[0.14em] text-[#7A7168]">
-                        Mobile Number
+                        شماره موبایل
                       </label>
                       <input
                         required
@@ -401,7 +402,7 @@ export const AccountModal: React.FC = () => {
                     </div>
                     <div>
                       <label className="block text-[11px] uppercase tracking-[0.14em] text-[#7A7168]">
-                        Password
+                        گذرواژه
                       </label>
                       <input
                         required
@@ -420,7 +421,7 @@ export const AccountModal: React.FC = () => {
                       disabled={busy}
                       className="w-full bg-[#1B1917] py-3.5 text-[11.5px] font-medium uppercase tracking-[0.16em] text-[#FAF8F5] hover:bg-[#332E2A]"
                     >
-                      {busy ? "Signing in…" : "Sign In"}
+                      {busy ? "در حال ورود…" : "ورود"}
                     </button>
                   </form>
                 )}
@@ -434,13 +435,13 @@ export const AccountModal: React.FC = () => {
                 type="search"
                 value={trackCode}
                 onChange={(e) => setTrackCode(e.target.value)}
-                placeholder="Lookup order reference (e.g. SLN-84920)"
+                placeholder="جست‌وجو با شماره سفارش (مثلاً SLN-84920)"
                 className="h-10 w-full border border-[#D8CFC3] bg-white px-3.5 text-[13px] focus:border-[#1B1917] focus:outline-none"
               />
 
               {displayedOrders.length === 0 ? (
                 <p className="py-10 text-center text-[13.5px] text-[#7A7168]">
-                  No matching order found.
+                  سفارشی با این مشخصات پیدا نشد.
                 </p>
               ) : (
                 displayedOrders.map((order) => {
@@ -456,7 +457,7 @@ export const AccountModal: React.FC = () => {
                             {order.orderCode}
                           </p>
                           <p className="text-[11.5px] text-[#7A7168]">
-                            {new Date(order.createdAt).toLocaleDateString("en-US", {
+                            {new Date(order.createdAt).toLocaleDateString("fa-IR", {
                               month: "short",
                               day: "numeric",
                               year: "numeric",
@@ -471,7 +472,7 @@ export const AccountModal: React.FC = () => {
                             {formatMoney(order.amount)}
                           </p>
                           <p className="text-[10.5px] font-medium uppercase tracking-[0.12em] text-[#A64B2A]">
-                            {order.status}
+                            {localizeOrderStatus(order.status)}
                           </p>
                         </div>
                       </div>
@@ -493,7 +494,7 @@ export const AccountModal: React.FC = () => {
                                 }`}
                               >
                                 {done && <Check className="h-2.5 w-2.5 text-[#A64B2A]" />}
-                                {st.slice(0, 1) + st.slice(1).toLowerCase()}
+                                {localizeOrderStatus(st)}
                               </p>
                             </div>
                           );
@@ -507,7 +508,7 @@ export const AccountModal: React.FC = () => {
                               key={it.productId + it.color}
                               className="text-[12px] text-[#5B544D]"
                             >
-                              {it.quantity}× {it.title}
+                              {toPersianDigits(it.quantity)}× {it.title}
                             </span>
                           ))}
                         </div>
@@ -523,7 +524,7 @@ export const AccountModal: React.FC = () => {
           {tab === "wishlist" &&
             (savedProducts.length === 0 ? (
               <p className="py-12 text-center text-[13.5px] text-[#7A7168]">
-                Tap the heart on any object to keep it here for later.
+                برای ذخیره محصولات، نشان قلب کنار آن‌ها را انتخاب کنید.
               </p>
             ) : (
               <div className="divide-y divide-[#ECE5DC]">
@@ -538,7 +539,7 @@ export const AccountModal: React.FC = () => {
                         setAccountOpen(false);
                         setActiveProduct(p);
                       }}
-                      className="flex min-w-0 flex-1 items-center gap-3.5 text-left"
+                      className="flex min-w-0 flex-1 items-center gap-3.5 text-right"
                     >
                       <img
                         src={p.images.main}
@@ -563,11 +564,11 @@ export const AccountModal: React.FC = () => {
                         }}
                         className="bg-[#1B1917] px-3.5 py-2 text-[10.5px] font-medium uppercase tracking-[0.14em] text-[#FAF8F5]"
                       >
-                        Add
+                        افزودن
                       </button>
                       <button
                         type="button"
-                        aria-label="Remove from saved"
+                        aria-label="حذف از علاقه‌مندی‌ها"
                         onClick={() => toggleWishlist(p.id)}
                         className="p-2 text-[#8D847A] hover:text-[#A64B2A]"
                       >

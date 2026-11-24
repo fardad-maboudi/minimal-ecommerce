@@ -119,7 +119,7 @@ export const JoorchinModal: React.FC = () => {
       }
       setStaffAuthed(true);
       await loadBackoffice();
-      showToast("Staff back-office authenticated via Joorchin");
+      showToast("ورود کارکنان به پنل مدیریت فروشگاه انجام شد");
     } catch (err) {
       setStaffError(getSdkErrorMessage(err));
     } finally {
@@ -130,7 +130,7 @@ export const JoorchinModal: React.FC = () => {
   const handleFulfill = async (orderId: string) => {
     try {
       await service.fulfillBackofficeOrder(orderId);
-      showToast(`Fulfilled order #${orderId}`);
+      showToast(`سفارش شماره ${orderId} پردازش شد`);
       await loadBackoffice();
     } catch (err) {
       setStaffError(getSdkErrorMessage(err));
@@ -153,7 +153,7 @@ export const JoorchinModal: React.FC = () => {
       });
       setNewTitle("");
       setNewPrice("");
-      showToast("Product saved to Joorchin catalog");
+      showToast("محصول در فهرست فروشگاه ذخیره شد");
       await refreshCatalog();
     } catch (err) {
       setStaffError(getSdkErrorMessage(err));
@@ -174,16 +174,17 @@ export const JoorchinModal: React.FC = () => {
   const sampleServePath = previewAssetServePath("hero-stoneware-01", 800);
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end">
+    <div dir="ltr" className="fixed inset-0 z-50 flex justify-end">
       <div
         className="fixed inset-0 bg-[#1A1816]/50 backdrop-blur-[2px]"
         onClick={() => setJoorchinOpen(false)}
       />
 
       <aside
+        dir="rtl"
         role="dialog"
         aria-modal="true"
-        aria-label="Joorchin SDK Backend Studio"
+        aria-label="استودیوی اتصال فروشگاه"
         className="animate-drawer-in relative z-10 flex h-full w-full max-w-[540px] flex-col bg-[#FAF8F5] shadow-2xl"
       >
         {/* Header */}
@@ -193,13 +194,13 @@ export const JoorchinModal: React.FC = () => {
               @joorchin/client-sdk · v0.3.1
             </p>
             <h2 className="font-serif-display mt-1 text-[27px] font-normal leading-tight">
-              Storefront Backend
+              زیرساخت فروشگاه
             </h2>
           </div>
           <button
             type="button"
             onClick={() => setJoorchinOpen(false)}
-            aria-label="Close backend configuration"
+            aria-label="بستن تنظیمات اتصال"
             className="p-1 text-[#B6ACA1] hover:text-[#FAF8F5]"
           >
             <X className="h-4 w-4" />
@@ -225,16 +226,16 @@ export const JoorchinModal: React.FC = () => {
             onClick={() => void refreshCatalog()}
             className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-[0.1em] text-[#453F3A] hover:text-[#1B1917]"
           >
-            <RefreshCw className="h-3 w-3" /> Sync
+            <RefreshCw className="h-3 w-3" /> همگام‌سازی
           </button>
         </div>
 
         {/* Navigation tabs */}
         <div className="flex gap-6 border-b border-[#E5DED4] px-6">
           {[
-            { id: "connect", label: "Connection", icon: Plug },
-            { id: "staff", label: "Staff Back-Office", icon: Shield },
-            { id: "logs", label: `SDK Trace (${sdkLogs.length})`, icon: Terminal },
+            { id: "connect", label: "اتصال", icon: Plug },
+            { id: "staff", label: "پنل مدیریت", icon: Shield },
+            { id: "logs", label: `گزارش SDK (${sdkLogs.length})`, icon: Terminal },
           ].map((item) => {
             const Icon = item.icon;
             const active = tab === item.id;
@@ -264,7 +265,7 @@ export const JoorchinModal: React.FC = () => {
               <form onSubmit={handleConnect} className="space-y-4">
                 <div>
                   <label className="block text-[11px] font-medium uppercase tracking-[0.14em] text-[#665F57]">
-                    Joorchin App ID
+                    شناسه فروشگاه Joorchin
                   </label>
                   <input
                     type="text"
@@ -274,14 +275,14 @@ export const JoorchinModal: React.FC = () => {
                       setAppId(val);
                       setTokenKey(`joorchin_solen_${val.trim() || "storefront"}`);
                     }}
-                    placeholder="e.g. app_solen_prod or numeric app ID"
+                    placeholder="مثلاً app_solen_prod یا شناسه عددی اپ"
                     className="font-mono-tech mt-1.5 h-10 w-full border border-[#D8CFC3] bg-white px-3 text-[13px] focus:border-[#1B1917] focus:outline-none"
                   />
                 </div>
 
                 <div>
                   <label className="block text-[11px] font-medium uppercase tracking-[0.14em] text-[#665F57]">
-                    Server URL
+                    نشانی سرور
                   </label>
                   <input
                     type="url"
@@ -295,7 +296,7 @@ export const JoorchinModal: React.FC = () => {
 
                 <div>
                   <label className="block text-[11px] font-medium uppercase tracking-[0.14em] text-[#665F57]">
-                    App-Scoped Token Storage Key
+                    کلید ذخیره توکن اختصاصی اپلیکیشن
                   </label>
                   <input
                     type="text"
@@ -304,7 +305,7 @@ export const JoorchinModal: React.FC = () => {
                     className="font-mono-tech mt-1.5 h-10 w-full border border-[#D8CFC3] bg-white px-3 text-[12px] text-[#5B544D] focus:border-[#1B1917] focus:outline-none"
                   />
                   <p className="mt-1 text-[11px] text-[#8A8076]">
-                    Isolated per app per SDK guidance so customer tokens never collide across apps.
+                    ذخیره‌سازی مجزا برای هر اپلیکیشن، مطابق راهنمای SDK؛ تا توکن‌های مشتریان با یکدیگر تداخل نکنند.
                   </p>
                 </div>
 
@@ -320,7 +321,7 @@ export const JoorchinModal: React.FC = () => {
                     disabled={connecting}
                     className="flex-1 bg-[#1B1917] py-3 text-[11.5px] font-medium uppercase tracking-[0.15em] text-[#FAF8F5] transition hover:bg-[#332E2A] disabled:opacity-60"
                   >
-                    {connecting ? "Connecting…" : "Connect & Fetch Store"}
+                    {connecting ? "در حال اتصال…" : "اتصال و دریافت اطلاعات فروشگاه"}
                   </button>
                   {joorchinConfig.appId && (
                     <button
@@ -328,7 +329,7 @@ export const JoorchinModal: React.FC = () => {
                       onClick={() => void disconnectJoorchin()}
                       className="border border-[#D8CFC3] px-4 py-3 text-[11px] uppercase tracking-[0.12em] text-[#665F57] hover:border-[#A64B2A] hover:text-[#A64B2A]"
                     >
-                      Reset
+                      بازنشانی
                     </button>
                   )}
                 </div>
@@ -337,17 +338,17 @@ export const JoorchinModal: React.FC = () => {
               {/* Wired modules checklist */}
               <div className="border-t border-[#E5DED4] pt-5">
                 <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#7A7168]">
-                  Bound SDK Capabilities
+                  قابلیت‌های متصل به SDK
                 </p>
                 <ul className="mt-3 space-y-2 text-[12px] text-[#453F3A]">
                   {[
-                    ["Catalog", `client.site.plugin("ecommerce").records("product").list()`],
-                    ["Bag & Orders", `client.site.plugin("ecommerce").action("cart/items" | "orders")`],
-                    ["Vouchers & Reviews", `action("vouchers/validate") & action("comments")`],
-                    ["Customer Auth", `client.auth.requestOtp / loginViaPhoneOtp / loginWithPassword`],
-                    ["Newsletter", `client.entities.NewsletterSubscriber.create()`],
-                    ["Web Push", `client.site.push.getStatus() / subscribe({ topics })`],
-                    ["Staff Back-Office", `client.auth.*Staff* + client.backoffice.ecommerce`],
+                    ["فهرست محصولات", `client.site.plugin("ecommerce").records("product").list()`],
+                    ["سبد و سفارش‌ها", `client.site.plugin("ecommerce").action("cart/items" | "orders")`],
+                    ["تخفیف‌ها و دیدگاه‌ها", `action("vouchers/validate") & action("comments")`],
+                    ["ورود مشتریان", `client.auth.requestOtp / loginViaPhoneOtp / loginWithPassword`],
+                    ["خبرنامه", `client.entities.NewsletterSubscriber.create()`],
+                    ["اعلان‌های وب", `client.site.push.getStatus() / subscribe({ topics })`],
+                    ["پنل مدیریت", `client.auth.*Staff* + client.backoffice.ecommerce`],
                   ].map(([name, api]) => (
                     <li key={name} className="flex items-start gap-2">
                       <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#A64B2A]" />
@@ -366,7 +367,7 @@ export const JoorchinModal: React.FC = () => {
               <div className="space-y-3 border-t border-[#E5DED4] pt-5">
                 <div className="flex items-center justify-between">
                   <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#7A7168]">
-                    Deploy .env Variables
+                    متغیرهای محیطی .env
                   </p>
                   <button
                     type="button"
@@ -374,19 +375,19 @@ export const JoorchinModal: React.FC = () => {
                     className="inline-flex items-center gap-1 text-[11px] text-[#453F3A] hover:text-[#1B1917]"
                   >
                     {copiedEnv ? <Check className="h-3 w-3 text-emerald-700" /> : <Copy className="h-3 w-3" />}
-                    {copiedEnv ? "Copied" : "Copy"}
+                    {copiedEnv ? "کپی شد" : "کپی"}
                   </button>
                 </div>
                 <pre className="font-mono-tech overflow-x-auto bg-[#1A1816] p-3.5 text-[11px] leading-relaxed text-[#E6DDD1]">
                   {envSnippet}
                 </pre>
                 <div className="bg-[#F2EDE6] p-3 text-[11px] text-[#5B544D]">
-                  <p className="font-medium text-[#1B1917]">Asset resolver preview</p>
+                  <p className="font-medium text-[#1B1917]">پیش‌نمایش نشانی فایل</p>
                   <p className="font-mono-tech mt-1 break-all text-[10.5px]">
                     {sampleAssetUrl}
                   </p>
                   <p className="font-mono-tech mt-1 text-[10px] text-[#8A8076]">
-                    schemas.buildAssetServePath → {sampleServePath}
+                    مسیر سرو فایل → {sampleServePath}
                   </p>
                 </div>
               </div>
@@ -399,10 +400,10 @@ export const JoorchinModal: React.FC = () => {
               {!joorchinConfig.appId ? (
                 <div className="border border-[#E2D9CE] bg-[#F2EDE6] p-5 text-[13px] text-[#5B544D]">
                   <p className="font-medium text-[#1B1917]">
-                    Connect your Joorchin App ID first
+                    ابتدا شناسه فروشگاه Joorchin را متصل کنید
                   </p>
                   <p className="mt-1.5 leading-relaxed">
-                    Staff operations run strictly under site-member authority (
+                    عملیات کارکنان با سطح دسترسی اعضای فروشگاه انجام می‌شود (
                     <code className="font-mono-tech text-[11px]">
                       requestStaffOtp
                     </code>{" "}
@@ -410,7 +411,7 @@ export const JoorchinModal: React.FC = () => {
                     <code className="font-mono-tech text-[11px]">
                       loginStaffWithPassword
                     </code>
-                    ) and bind directly to{" "}
+                     ) و مستقیماً به سامانه متصل می‌شوند{" "}
                     <code className="font-mono-tech text-[11px]">
                       client.backoffice.ecommerce
                     </code>
@@ -421,17 +422,17 @@ export const JoorchinModal: React.FC = () => {
                     onClick={() => setTab("connect")}
                     className="mt-4 bg-[#1B1917] px-4 py-2 text-[11px] uppercase tracking-[0.14em] text-[#FAF8F5]"
                   >
-                    Enter App ID →
+                    ورود شناسه اپلیکیشن ←
                   </button>
                 </div>
               ) : !staffAuthed ? (
                 <div className="space-y-4">
                   <p className="text-[12.5px] leading-relaxed text-[#665F57]">
-                    Sign in as an authorized owner or invited store member of{" "}
+                    به‌عنوان مالک مجاز یا عضو دعوت‌شده فروشگاه وارد شوید:{" "}
                     <span className="font-mono-tech text-[#1B1917]">
                       {joorchinConfig.appId}
                     </span>
-                    . Customer tokens receive 403 by server policy.
+                   . طبق سیاست سرور، توکن مشتری دسترسی مدیریتی ندارد.
                   </p>
 
                   <div className="inline-flex border border-[#DDD4C8] bg-[#F2EDE6] p-0.5 text-[11px]">
@@ -444,7 +445,7 @@ export const JoorchinModal: React.FC = () => {
                           : "text-[#665F57]"
                       }`}
                     >
-                      Staff OTP
+                      کد پیامکی کارکنان
                     </button>
                     <button
                       type="button"
@@ -455,7 +456,7 @@ export const JoorchinModal: React.FC = () => {
                           : "text-[#665F57]"
                       }`}
                     >
-                      Staff Password
+                      گذرواژه کارکنان
                     </button>
                   </div>
 
@@ -466,7 +467,7 @@ export const JoorchinModal: React.FC = () => {
                         type="tel"
                         value={staffPhone}
                         onChange={(e) => setStaffPhone(e.target.value)}
-                        placeholder="Staff phone number (e.g. 09120000000)"
+                        placeholder="شماره موبایل کارکنان (مثلاً ۰۹۱۲۰۰۰۰۰۰۰)"
                         className="h-10 w-full border border-[#D8CFC3] bg-white px-3 text-[13px]"
                       />
                       {staffError && (
@@ -477,7 +478,7 @@ export const JoorchinModal: React.FC = () => {
                         disabled={staffBusy}
                         className="w-full bg-[#1B1917] py-3 text-[11.5px] font-medium uppercase tracking-[0.14em] text-[#FAF8F5]"
                       >
-                        {staffBusy ? "Sending…" : "Request Staff OTP"}
+                        {staffBusy ? "در حال ارسال…" : "دریافت کد ورود کارکنان"}
                       </button>
                     </form>
                   ) : (
@@ -487,7 +488,7 @@ export const JoorchinModal: React.FC = () => {
                         type="tel"
                         value={staffPhone}
                         onChange={(e) => setStaffPhone(e.target.value)}
-                        placeholder="Staff phone"
+                        placeholder="شماره موبایل کارکنان"
                         className="h-10 w-full border border-[#D8CFC3] bg-white px-3 text-[13px]"
                       />
                       {staffAuthMode === "otp" ? (
@@ -496,7 +497,7 @@ export const JoorchinModal: React.FC = () => {
                           type="text"
                           value={staffOtp}
                           onChange={(e) => setStaffOtp(e.target.value)}
-                          placeholder="Staff OTP code"
+                          placeholder="کد پیامکی کارکنان"
                           className="font-mono-tech h-10 w-full border border-[#D8CFC3] bg-white px-3 text-[14px] tracking-[0.2em]"
                         />
                       ) : (
@@ -505,7 +506,7 @@ export const JoorchinModal: React.FC = () => {
                           type="password"
                           value={staffPassword}
                           onChange={(e) => setStaffPassword(e.target.value)}
-                          placeholder="Staff password"
+                          placeholder="گذرواژه کارکنان"
                           className="h-10 w-full border border-[#D8CFC3] bg-white px-3 text-[13px]"
                         />
                       )}
@@ -517,7 +518,7 @@ export const JoorchinModal: React.FC = () => {
                         disabled={staffBusy}
                         className="w-full bg-[#1B1917] py-3 text-[11.5px] font-medium uppercase tracking-[0.14em] text-[#FAF8F5]"
                       >
-                        {staffBusy ? "Signing in…" : "Open Staff Console"}
+                        {staffBusy ? "در حال ورود…" : "ورود به پنل کارکنان"}
                       </button>
                     </form>
                   )}
@@ -536,14 +537,14 @@ export const JoorchinModal: React.FC = () => {
                     className="space-y-3 border border-[#E5DED4] bg-white p-4"
                   >
                     <p className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.14em] text-[#1B1917]">
-                      <Plus className="h-3.5 w-3.5 text-[#A64B2A]" /> Quick Add Catalog Product
+                      <Plus className="h-3.5 w-3.5 text-[#A64B2A]" /> افزودن سریع محصول به فهرست
                     </p>
                     <input
                       required
                       type="text"
                       value={newTitle}
                       onChange={(e) => setNewTitle(e.target.value)}
-                      placeholder="Product title"
+                      placeholder="نام محصول"
                       className="h-9 w-full border border-[#D8CFC3] px-3 text-[12.5px]"
                     />
                     <div className="grid grid-cols-2 gap-2.5">
@@ -554,7 +555,7 @@ export const JoorchinModal: React.FC = () => {
                         step="0.01"
                         value={newPrice}
                         onChange={(e) => setNewPrice(e.target.value)}
-                        placeholder="Price (USD)"
+                        placeholder="قیمت (دلار)"
                         className="h-9 border border-[#D8CFC3] px-3 text-[12.5px]"
                       />
                       <input
@@ -562,7 +563,7 @@ export const JoorchinModal: React.FC = () => {
                         min="0"
                         value={newStock}
                         onChange={(e) => setNewStock(e.target.value)}
-                        placeholder="Stock"
+                        placeholder="موجودی"
                         className="h-9 border border-[#D8CFC3] px-3 text-[12.5px]"
                       />
                     </div>
@@ -571,22 +572,22 @@ export const JoorchinModal: React.FC = () => {
                       disabled={staffBusy}
                       className="w-full bg-[#1B1917] py-2.5 text-[11px] font-medium uppercase tracking-[0.14em] text-[#FAF8F5]"
                     >
-                      Save via backoffice.ecommerce.saveProduct
+                      ذخیره از طریق پنل مدیریت فروشگاه
                     </button>
                   </form>
 
-                  {/* Shop Orders */}
+                  {/* سفارش‌های فروشگاه */}
                   <div>
                     <div className="mb-2 flex items-center justify-between">
                       <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#7A7168]">
-                        Shop Orders ({staffOrders.length})
+                        سفارش‌های فروشگاه ({staffOrders.length})
                       </p>
                       <button
                         type="button"
                         onClick={() => void loadBackoffice()}
                         className="text-[11px] underline text-[#665F57]"
                       >
-                        Reload
+                        بارگذاری مجدد
                       </button>
                     </div>
                     <div className="space-y-2">
@@ -610,7 +611,7 @@ export const JoorchinModal: React.FC = () => {
                               onClick={() => void handleFulfill(id)}
                               className="border border-[#1B1917] px-2.5 py-1 text-[10.5px] uppercase tracking-[0.12em] hover:bg-[#1B1917] hover:text-white"
                             >
-                              Fulfill
+                              پردازش
                             </button>
                           </div>
                         );
@@ -627,7 +628,7 @@ export const JoorchinModal: React.FC = () => {
             <div>
               <div className="mb-3 flex items-center justify-between">
                 <p className="text-[11px] uppercase tracking-[0.14em] text-[#7A7168]">
-                  Recent SDK calls
+                  فراخوانی‌های اخیر SDK
                 </p>
                 {sdkLogs.length > 0 && (
                   <button
@@ -635,14 +636,14 @@ export const JoorchinModal: React.FC = () => {
                     onClick={clearSdkLogs}
                     className="text-[11px] text-[#665F57] hover:text-[#1B1917]"
                   >
-                    Clear
+                    پاک‌سازی
                   </button>
                 )}
               </div>
 
               {sdkLogs.length === 0 ? (
                 <p className="py-10 text-center text-[13px] text-[#7A7168]">
-                  Browse, apply a voucher, add to bag, or place an order to see live SDK activity.
+                  برای مشاهده فعالیت زنده SDK، محصولات را مرور کنید، کد تخفیف اعمال کنید یا سفارشی ثبت کنید.
                 </p>
               ) : (
                 <ul className="space-y-2.5">

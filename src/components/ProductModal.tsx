@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { X, Star, Heart, Minus, Plus, Check, ShieldCheck, Truck } from "lucide-react";
+import { localizeCategory, toPersianDigits } from "../utils/localization";
 import {
   formatMoney,
   getEffectivePrice,
@@ -23,7 +24,7 @@ export const ProductModal: React.FC = () => {
   useEffect(() => {
     if (activeProduct) {
       setPhotoIdx(0);
-      setSelectedColor(activeProduct.colors[0]?.name ?? "Signature");
+      setSelectedColor(activeProduct.colors[0]?.name ?? "ویژه");
       setQty(1);
     }
   }, [activeProduct]);
@@ -55,7 +56,7 @@ export const ProductModal: React.FC = () => {
         <button
           type="button"
           onClick={() => setActiveProduct(null)}
-          aria-label="Close product details"
+          aria-label="بستن جزئیات محصول"
           className="absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-[#FAF8F5]/90 text-[#1B1917] transition hover:bg-white"
         >
           <X className="h-4 w-4" />
@@ -99,7 +100,7 @@ export const ProductModal: React.FC = () => {
           <div className="flex flex-col justify-between p-6 sm:p-8 md:col-span-6">
             <div>
               <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[#A64B2A]">
-                <span>{activeProduct.categoryId}</span>
+                <span>{localizeCategory(activeProduct.categoryId)}</span>
                 <span>·</span>
                 <span>{activeProduct.properties.origin}</span>
               </div>
@@ -119,7 +120,7 @@ export const ProductModal: React.FC = () => {
                         {formatMoney(activeProduct.price)}
                       </span>
                       <span className="text-[11.5px] font-medium text-[#A64B2A]">
-                        Save {activeProduct.discountPercent}%
+                        تخفیف {activeProduct.discountPercent}%
                       </span>
                     </>
                   )}
@@ -128,9 +129,9 @@ export const ProductModal: React.FC = () => {
                 <div className="flex items-center gap-1 text-[12px] text-[#665F57] tabular-nums">
                   <Star className="h-3.5 w-3.5 fill-[#A64B2A] text-[#A64B2A]" />
                   <span className="font-medium text-[#1B1917]">
-                    {activeProduct.rating.average.toFixed(1)}
+                    {toPersianDigits(activeProduct.rating.average.toFixed(1))}
                   </span>
-                  <span>({activeProduct.rating.count})</span>
+                  <span>({toPersianDigits(activeProduct.rating.count)})</span>
                 </div>
               </div>
 
@@ -141,7 +142,7 @@ export const ProductModal: React.FC = () => {
               {/* Color Swatches */}
               <div className="mt-5">
                 <p className="text-[11px] uppercase tracking-[0.14em] text-[#7A7168]">
-                  Finish:{" "}
+                  رنگ و پرداخت:{" "}
                   <span className="font-medium text-[#1B1917]">
                     {selectedColor}
                   </span>
@@ -176,7 +177,7 @@ export const ProductModal: React.FC = () => {
                 <div className="flex items-center border border-[#D8CFC3]">
                   <button
                     type="button"
-                    aria-label="Decrease quantity"
+                    aria-label="کاهش تعداد"
                     onClick={() => setQty((q) => Math.max(1, q - 1))}
                     className="flex h-12 w-10 items-center justify-center hover:bg-[#EFE9E0]"
                   >
@@ -187,7 +188,7 @@ export const ProductModal: React.FC = () => {
                   </span>
                   <button
                     type="button"
-                    aria-label="Increase quantity"
+                    aria-label="افزایش تعداد"
                     onClick={() => setQty((q) => Math.min(activeProduct.stock || 10, q + 1))}
                     className="flex h-12 w-10 items-center justify-center hover:bg-[#EFE9E0]"
                   >
@@ -207,13 +208,13 @@ export const ProductModal: React.FC = () => {
                   }}
                   className="flex-1 bg-[#1B1917] px-5 text-[11.5px] font-medium uppercase tracking-[0.16em] text-[#FAF8F5] transition hover:bg-[#322D29]"
                 >
-                  Add to Bag · {formatMoney(effectivePrice * qty)}
+                  افزودن به سبد · {formatMoney(effectivePrice * qty)}
                 </button>
 
                 <button
                   type="button"
                   onClick={() => toggleWishlist(activeProduct.id)}
-                  aria-label="Save piece"
+                  aria-label="افزودن به علاقه‌مندی‌ها"
                   className={`flex w-12 items-center justify-center border transition ${
                     isSaved
                       ? "border-[#A64B2A] text-[#A64B2A]"
@@ -229,21 +230,21 @@ export const ProductModal: React.FC = () => {
                 <span className="flex items-center gap-1.5">
                   <Truck className="h-3.5 w-3.5 text-[#A64B2A]" />
                   {activeProduct.stock <= 15
-                    ? `In stock · ${activeProduct.stock} remaining in batch`
-                    : "In stock · Ships today"}
+                    ? `موجود · ${toPersianDigits(activeProduct.stock)} عدد در این سری باقی‌مانده`
+                    : "موجود · ارسال امروز"}
                 </span>
                 <span className="flex items-center gap-1.5">
                   <ShieldCheck className="h-3.5 w-3.5 text-[#A64B2A]" />
-                  60-day trial · 5-year care
+                  ۶۰ روز فرصت تجربه · ۵ سال پشتیبانی
                 </span>
               </div>
 
-              {/* Material details aligned directly with EcommerceProduct.properties */}
+              {/* جنس details aligned directly with EcommerceProduct.properties */}
               <div className="mt-6 border-t border-[#E5DED4] pt-5">
                 <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-[12px]">
                   <div>
                     <dt className="uppercase tracking-[0.12em] text-[#8A8076]">
-                      Material
+                      جنس
                     </dt>
                     <dd className="mt-0.5 text-[#1B1917]">
                       {activeProduct.properties.material}
@@ -251,7 +252,7 @@ export const ProductModal: React.FC = () => {
                   </div>
                   <div>
                     <dt className="uppercase tracking-[0.12em] text-[#8A8076]">
-                      Dimensions
+                      ابعاد
                     </dt>
                     <dd className="mt-0.5 text-[#1B1917]">
                       {activeProduct.properties.dimensions}
@@ -259,7 +260,7 @@ export const ProductModal: React.FC = () => {
                   </div>
                   <div>
                     <dt className="uppercase tracking-[0.12em] text-[#8A8076]">
-                      Weight
+                      وزن
                     </dt>
                     <dd className="mt-0.5 text-[#1B1917]">
                       {activeProduct.properties.weight}
@@ -267,7 +268,7 @@ export const ProductModal: React.FC = () => {
                   </div>
                   <div>
                     <dt className="uppercase tracking-[0.12em] text-[#8A8076]">
-                      Origin
+                      خاستگاه
                     </dt>
                     <dd className="mt-0.5 text-[#1B1917]">
                       {activeProduct.properties.origin}
@@ -290,7 +291,7 @@ export const ProductModal: React.FC = () => {
               {productReviews.length > 0 && (
                 <div className="mt-5 border-t border-[#E5DED4] pt-4">
                   <p className="text-[11px] uppercase tracking-[0.14em] text-[#7A7168]">
-                    Verified note
+                    دیدگاه تأییدشده
                   </p>
                   <p className="mt-1.5 font-serif-display text-[19px] leading-snug text-[#1B1917]">
                     “{productReviews[0].comment}”
@@ -325,7 +326,7 @@ export const ArticleModal: React.FC = () => {
         <button
           type="button"
           onClick={() => setActiveArticle(null)}
-          aria-label="Close journal entry"
+          aria-label="بستن مطلب"
           className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-[#FAF8F5]/90 text-[#1B1917] hover:bg-white"
         >
           <X className="h-4 w-4" />
@@ -362,7 +363,7 @@ export const ArticleModal: React.FC = () => {
                 />
                 <div className="min-w-0">
                   <p className="text-[10.5px] uppercase tracking-[0.14em] text-[#8A8076]">
-                    Mentioned in this note
+                    محصول مرتبط با این مطلب
                   </p>
                   <p className="truncate text-[14px] font-medium text-[#1B1917]">
                     {featured.title}
@@ -377,7 +378,7 @@ export const ArticleModal: React.FC = () => {
                 }}
                 className="shrink-0 bg-[#1B1917] px-4 py-2.5 text-[11px] font-medium uppercase tracking-[0.14em] text-[#FAF8F5] hover:bg-[#332E2A]"
               >
-                Shop · {formatMoney(getEffectivePrice(featured))}
+                خرید · {formatMoney(getEffectivePrice(featured))}
               </button>
             </div>
           )}
